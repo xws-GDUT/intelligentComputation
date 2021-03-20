@@ -10,7 +10,7 @@ import java.util.Random;
 /**
  * @Author xws
  * @email wansenxu@163.com
- * 君主交叉方案
+ * 交叉策略：君主方案
  */
 
 public class EmperorCrossover extends Crossover {
@@ -24,9 +24,5 @@ public class EmperorCrossover extends Crossover {
                 binomialCross(cloneBestIndividual,pop.get(i));
             }
         }
-    }
-    public Crossover setRateOfCrossover(double value) {
-        this.rateOfCrossover = value;
-        return this;
     }
 }

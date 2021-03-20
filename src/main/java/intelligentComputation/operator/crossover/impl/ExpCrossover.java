@@ -47,8 +47,4 @@ public class ExpCrossover extends Crossover {
         }
         return offspring;
     }
-    public Crossover setRateOfCrossover(double value) {
-        this.rateOfCrossover = value;
-        return this;
-    }
 }

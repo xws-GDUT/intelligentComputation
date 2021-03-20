@@ -10,7 +10,7 @@ import java.util.Random;
  *@Description
  *@Author 许万森
  *@email wansenxu@163.com
- *
+ *交叉策略: 随机方案
  */
 
 
@@ -24,15 +24,10 @@ public class DefaultCrossover extends Crossover {
             do{
                 position = new Random().nextInt(pop.get(0).getSolution().size());
             }while (i==position);
-
             double p = new Random().nextDouble();
             if(p < rateOfCrossover){
                 binomialCross(pop.get(i),pop.get(position));
             }
         }
-    }
-    public Crossover setRateOfCrossover(double value) {
-        this.rateOfCrossover = value;
-        return this;
     }
 }

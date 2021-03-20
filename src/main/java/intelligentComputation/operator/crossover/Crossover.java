@@ -23,7 +23,7 @@ public abstract class Crossover{
     }
 
     /**
-     * 两个个体以二项式交叉的方式进行交叉
+     * 交叉方式：两个个体以二项式交叉的方式进行交叉
      * @param i1
      * @param i2
      */
@@ -40,6 +40,7 @@ public abstract class Crossover{
             }
         }
     }
+
 
     public Crossover setRateOfCrossover(double value) {
         this.rateOfCrossover = value;
