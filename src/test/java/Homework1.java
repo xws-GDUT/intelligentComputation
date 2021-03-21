@@ -4,9 +4,8 @@ import intelligentComputation.evoluator.Evaluator;
 import intelligentComputation.evoluator.impl.F1;
 import intelligentComputation.operator.crossover.impl.BinCrossover;
 import intelligentComputation.operator.crossover.impl.OnePointCrossover;
-import intelligentComputation.operator.crossover.impl.RandCrossover;
 import intelligentComputation.operator.crossover.impl.EmperorCrossover;
-import intelligentComputation.operator.mutator.impl.DefaultMutator;
+import intelligentComputation.operator.mutator.impl.RandMutator;
 import intelligentComputation.operator.mutator.impl.RandDifferentMutator;
 import intelligentComputation.operator.selector.impl.DifferentSelector;
 import intelligentComputation.operator.selector.impl.RouletteSelector;
@@ -112,7 +111,7 @@ public class Homework1 {
 
         GeneticAlgorithmOptimizer GA21 = new GeneticAlgorithmOptimizer();
         GA21.setCrossover(new OnePointCrossover().setRateOfCrossover(0.8))
-                .setMutator(new DefaultMutator().setRateOfMutation(0.1))
+                .setMutator(new RandMutator().setRateOfMutation(0.1))
                 .setSelector(new RouletteSelector());
 
         //运行算法处理数据
@@ -151,7 +150,7 @@ public class Homework1 {
 
         GeneticAlgorithm2Optimizer GA22 = new GeneticAlgorithm2Optimizer();
         GA22.setCrossover(new EmperorCrossover().setRateOfCrossover(0.8))
-                .setMutator(new DefaultMutator().setRateOfMutation(0.1))
+                .setMutator(new RandMutator().setRateOfMutation(0.1))
                 .setSelector(new TopSelector());
 
         //运行算法处理数据

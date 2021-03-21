@@ -60,19 +60,7 @@ public abstract class Crossover{
         }
     }
 
-    /**
-     * 单点交叉   开始交叉的点通过随机生成
-     * @param i1
-     * @param i2
-     */
-    protected void onePointCross(Individual i1,Individual i2){
-        int point = new Random().nextInt(i1.getSolution().size());
-        for (int i = point; i < i1.getSolution().size(); i++) {
-            double temp =  i1.getSolution().get(i);
-            i1.getSolution().set(i,i2.getSolution().get(i));
-            i2.getSolution().set(i,temp);
-        }
-    }
+
 
 
 }

@@ -16,22 +16,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-/**
- *@Description 差分进化算法优化器的具体实现
- *@Author 许万森
- *@email wansenxu@163.com
- */
-
 @Data
 @Accessors(chain = true)
-public class DifferentEvolutionOptimizer extends Optimizer<Individual> {
+public class GA extends Optimizer<Individual> {
 
-    private Selector selector;  //选择算子
-    private Crossover crossover;  //交叉算子
-    private Mutator mutator; //变异算子
+    private Selector selector;
+    private Mutator mutator;
+    private Crossover crossover;
 
     /**
-     * 通过差分进化算法得到最优个体
+     * 通过遗传算法得到最优个体
      * @param popSize 种群的大小
      * @param dimension 个体的维度
      * @param iterations 迭代次数
@@ -40,30 +34,25 @@ public class DifferentEvolutionOptimizer extends Optimizer<Individual> {
      * @return 种群每一代的收敛情况
      */
     @Override
-    public List<Individual> optimize(int popSize, int dimension, int iterations, Evaluator evaluator, Bound bound){
-        List<Individual> bestPerGeneration=new ArrayList<>();
-        List<Individual> pop= ECUtils.initPop(popSize,bound,dimension);
-        evaluator.evaluate(pop);
+    public List<Individual> optimize(int popSize, int dimension, int iterations, Evaluator evaluator, Bound bound) {
+        List<Individual> bestPerGeneration = new ArrayList<>();  //记录每一代最优个体的集合
+        List<Individual> convergence = new ArrayList<>();     //记录算法收敛初始的集合
 
+        List<Individual> pop = ECUtils.initPop(popSize, bound, dimension);  //初始化
+        evaluator.evaluate(pop);                                   //评价种群
+        for (int i = 0; i < iterations; i++) {
+            bestPerGeneration.add(Collections.min(pop).clone());
+            Individual bestIndividual =  Collections.min(bestPerGeneration).clone();
+            convergence.add(bestIndividual);
+            System.out.println(i+1+"\t"+bestIndividual.getFitness());
 
-        for (int k = 0; k < iterations; k++) {
-            //将每一代的最优个体输出的convergence文件夹下
-            Individual clonedBestIndividual = null;
-            clonedBestIndividual =  Collections.min(pop).clone();
-            bestPerGeneration.add(clonedBestIndividual);
-            String info = k+1+"\t"+clonedBestIndividual.getFitness();
-            System.out.println(info);
-
-            //差分变异
-            List<Individual> mutatedPop = mutator.mutate(pop,bound);
-            //交叉
-            List<Individual> offspring = crossover.cross(pop, mutatedPop);
-            evaluator.evaluate(offspring);
-            //从pop和offspring种群中选择最优个体作为下一代种群的个体
-            pop=selector.select(pop, offspring);
-            //记录每一代的最优个体，观察该算法的收敛趋势
+            List<Individual> offspring = selector.select(pop);   //选择
+            crossover.cross(offspring);                          //交叉
+            mutator.mutate(offspring,bound);                     //变异
+            evaluator.evaluate(offspring);                      //评价种群
+            pop=offspring;
         }
-        return bestPerGeneration;
+        return convergence;
     }
 //    public List<Individual> initPop(int popsize, Bound<Double> bound, int dimension) {
 //        List<Individual> pop = new ArrayList<>();

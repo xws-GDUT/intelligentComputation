@@ -17,7 +17,7 @@ import java.util.Random;
 
 @Data
 @Accessors(chain = true)
-public class DefaultMutator extends Mutator {
+public class RandMutator extends Mutator {
     private double rateOfMutation;
     @Override
     public List<Individual> mutate(List<Individual> pop, Bound bound) {

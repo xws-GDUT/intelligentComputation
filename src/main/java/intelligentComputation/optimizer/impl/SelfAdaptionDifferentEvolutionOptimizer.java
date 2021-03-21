@@ -7,6 +7,7 @@ import intelligentComputation.operator.crossover.Crossover;
 import intelligentComputation.operator.mutator.Mutator;
 import intelligentComputation.operator.selector.Selector;
 import intelligentComputation.optimizer.Optimizer;
+import intelligentComputation.util.ECUtils;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -41,7 +42,7 @@ public class SelfAdaptionDifferentEvolutionOptimizer extends Optimizer<Individua
     @Override
     public List<Individual> optimize(int popSize, int dimension, int iterations, Evaluator evaluator, Bound bound){
         List<Individual> bestPerGeneration=new ArrayList<>();
-        List<Individual> pop=initPop(popSize,bound,dimension);
+        List<Individual> pop= ECUtils.initPop(popSize,bound,dimension);
         evaluator.evaluate(pop);
         double F0 = mutator.getFloatFactor();
         for (int k = 0; k < iterations; k++) {
@@ -65,17 +66,17 @@ public class SelfAdaptionDifferentEvolutionOptimizer extends Optimizer<Individua
         }
         return bestPerGeneration;
     }
-    public List<Individual> initPop(int popsize, Bound<Double> bound, int dimension) {
-        List<Individual> pop = new ArrayList<>();
-        for (int i = 0; i < popsize; i++) {
-            Individual individual = new Individual();
-            List<Double> solution = new ArrayList<>();
-            for (int j = 0; j < dimension; j++) {
-                solution.add(bound.getLowerBound()+new Random().nextDouble()*(bound.getUpperBound()-bound.getLowerBound()));
-            }
-            individual.setSolution(solution);
-            pop.add(individual);
-        }
-        return pop;
-    }
+//    public List<Individual> initPop(int popsize, Bound<Double> bound, int dimension) {
+//        List<Individual> pop = new ArrayList<>();
+//        for (int i = 0; i < popsize; i++) {
+//            Individual individual = new Individual();
+//            List<Double> solution = new ArrayList<>();
+//            for (int j = 0; j < dimension; j++) {
+//                solution.add(bound.getLowerBound()+new Random().nextDouble()*(bound.getUpperBound()-bound.getLowerBound()));
+//            }
+//            individual.setSolution(solution);
+//            pop.add(individual);
+//        }
+//        return pop;
+//    }
 }

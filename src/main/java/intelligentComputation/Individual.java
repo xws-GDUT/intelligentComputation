@@ -24,6 +24,7 @@ public class Individual implements Cloneable,Comparable<Individual>{
             clonedSolution.add(solution.get(i));
         }
         individual.solution = clonedSolution;
+        individual.fitness = this.fitness;
         return individual;
     }
 
