@@ -16,27 +16,6 @@ import java.util.Random;
  */
 
 public class BinCrossover extends Crossover{
-//    @Override
-//    public List<Individual> cross(List<Individual> pop,List<Individual> mutatedPop) {
-//        List<Individual> offspring = new ArrayList<>();
-//        for(int i=0;i<mutatedPop.size();i++){
-////            Individual tmpIndividual = mutatedPop.get(i);
-//            Individual individual = new Individual();
-//            List<Double> solution = new ArrayList<>();
-//            for(int j = 0; j< pop.get(0).getSolution().size(); j++){
-//                int popisitonOfCrossover = new Random().nextInt(pop.get(0).getSolution().size());
-//                double p = Math.random();
-//                if( p > rateOfCrossover && popisitonOfCrossover != j){
-//                    solution.add(j,pop.get(i).getSolution().get(j));  // 不交叉
-//                }else{ // 交叉
-//                    solution.add(j,mutatedPop.get(i).getSolution().get(j));
-//                }
-//            }
-//            individual.setSolution(solution);
-//            offspring.add(individual);
-//        }
-//        return offspring;
-//    }
 
     @Override
     public List<Individual> cross(List<Individual> pop,List<Individual> mutatedPop) {

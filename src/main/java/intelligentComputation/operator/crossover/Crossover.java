@@ -20,9 +20,12 @@ public abstract class Crossover{
     }
     //单种群内的交叉
     public void cross(List<Individual> pop){
-
     }
 
+    public Crossover setRateOfCrossover(double value) {
+        this.rateOfCrossover = value;
+        return this;
+    }
     /**
      * 交叉方式：两个个体以二项式交叉的方式进行交叉
      * @param i1
@@ -58,7 +61,7 @@ public abstract class Crossover{
     }
 
     /**
-     * 单点交叉
+     * 单点交叉   开始交叉的点通过随机生成
      * @param i1
      * @param i2
      */
@@ -72,8 +75,4 @@ public abstract class Crossover{
     }
 
 
-    public Crossover setRateOfCrossover(double value) {
-        this.rateOfCrossover = value;
-        return this;
-    }
 }
