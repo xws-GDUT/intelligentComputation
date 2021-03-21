@@ -24,14 +24,14 @@ import java.util.Random;
 
 @Data
 @Accessors(chain = true)
-public class SelfAdaptionDifferentEvolutionOptimizer extends Optimizer<Individual> {
+public class DE2 extends Optimizer<Individual> {
 
     private Selector selector;  //选择算子
     private Crossover crossover;  //交叉算子
     private Mutator mutator; //变异算子
 
     /**
-     * 通过差分进化算法得到最优个体
+     * 自适应差分进化 :  差分变异中的浮动因子随着迭代次数越来越小，
      * @param popSize 种群的大小
      * @param dimension 个体的维度
      * @param iterations 迭代次数
@@ -53,7 +53,7 @@ public class SelfAdaptionDifferentEvolutionOptimizer extends Optimizer<Individua
             String info = k+1+"\t"+clonedBestIndividual.getFitness();
             System.out.println(info);
 
-            //差分变异
+            //差分变异不断更新浮动因子
             double lamba = Math.exp((1.0-iterations)/(iterations-k));
             mutator.updateFloatFactor(F0*Math.pow(2,lamba));
             List<Individual> mutatedPop = mutator.mutate(pop,bound);
@@ -66,17 +66,4 @@ public class SelfAdaptionDifferentEvolutionOptimizer extends Optimizer<Individua
         }
         return bestPerGeneration;
     }
-//    public List<Individual> initPop(int popsize, Bound<Double> bound, int dimension) {
-//        List<Individual> pop = new ArrayList<>();
-//        for (int i = 0; i < popsize; i++) {
-//            Individual individual = new Individual();
-//            List<Double> solution = new ArrayList<>();
-//            for (int j = 0; j < dimension; j++) {
-//                solution.add(bound.getLowerBound()+new Random().nextDouble()*(bound.getUpperBound()-bound.getLowerBound()));
-//            }
-//            individual.setSolution(solution);
-//            pop.add(individual);
-//        }
-//        return pop;
-//    }
 }
