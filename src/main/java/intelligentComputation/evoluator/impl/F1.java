@@ -1,6 +1,7 @@
 package intelligentComputation.evoluator.impl;
 
 
+import intelligentComputation.Constant;
 import intelligentComputation.Individual;
 import intelligentComputation.evoluator.Evaluator;
 
@@ -13,6 +14,7 @@ public class F1 implements Evaluator<Individual> {
     @Override
     public void evaluate(List<Individual> pop) {
         for (int i = 0; i < pop.size(); i++) {
+            Constant.meanbestFEs++;//记录评价次数
             double sum = 0;
             Individual individual = pop.get(i);
             List<Double> solution = individual.getSolution();

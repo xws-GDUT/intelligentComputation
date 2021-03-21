@@ -25,9 +25,4 @@ public class DifferentSelector extends Selector {
         }
         return nextPop;
     }
-
-    @Deprecated
-    public List<Individual> select(List<Individual> pop) {
-        return null;
-    }
 }

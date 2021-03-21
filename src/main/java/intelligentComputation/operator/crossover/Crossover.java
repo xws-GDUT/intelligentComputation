@@ -2,6 +2,7 @@ package intelligentComputation.operator.crossover;
 
 import intelligentComputation.Individual;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -28,16 +29,45 @@ public abstract class Crossover{
      * @param i2
      */
     protected void binomialCross(Individual i1,Individual i2){
-        double p = new Random().nextDouble();
-        if(p < rateOfCrossover){
-            for(int j = 0; j < i1.getSolution().size(); j++){
-                p = new Random().nextDouble();
-                if(p < rateOfCrossover){
-                    double temp =  i1.getSolution().get(j);
-                    i1.getSolution().set(j,i2.getSolution().get(j));
-                    i2.getSolution().set(j,temp);
-                }
+        for(int j = 0; j < i1.getSolution().size(); j++){
+            double p = new Random().nextDouble();
+            if(p < rateOfCrossover){
+                double temp =  i1.getSolution().get(j);
+                i1.getSolution().set(j,i2.getSolution().get(j));
+                i2.getSolution().set(j,temp);
             }
+        }
+    }
+
+    /**
+     * 交叉方式：两个个体以二项式交叉的方式进行交叉，随机一维分量必定交叉
+     * @param i1
+     * @param i2
+     */
+    protected void binomialCross2(Individual i1,Individual i2){
+        for(int j = 0; j < i1.getSolution().size(); j++){
+            int popisitonOfCrossover = new Random().nextInt(i1.getSolution().size());
+            double p = Math.random();
+            if( p > rateOfCrossover && popisitonOfCrossover != j){ // 不交叉
+            }else{ //交叉
+                double temp =  i1.getSolution().get(j);
+                i1.getSolution().set(j,i2.getSolution().get(j));
+                i2.getSolution().set(j,temp);
+            }
+        }
+    }
+
+    /**
+     * 单点交叉
+     * @param i1
+     * @param i2
+     */
+    protected void onePointCross(Individual i1,Individual i2){
+        int point = new Random().nextInt(i1.getSolution().size());
+        for (int i = point; i < i1.getSolution().size(); i++) {
+            double temp =  i1.getSolution().get(i);
+            i1.getSolution().set(i,i2.getSolution().get(i));
+            i2.getSolution().set(i,temp);
         }
     }
 
