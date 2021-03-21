@@ -24,7 +24,7 @@ import java.util.Random;
 
 @Data
 @Accessors(chain = true)
-public class DifferentEvolutionOptimizer extends Optimizer<Individual> {
+public class DE extends Optimizer<Individual> {
 
     private Selector selector;  //选择算子
     private Crossover crossover;  //交叉算子
@@ -41,41 +41,21 @@ public class DifferentEvolutionOptimizer extends Optimizer<Individual> {
      */
     @Override
     public List<Individual> optimize(int popSize, int dimension, int iterations, Evaluator evaluator, Bound bound){
-        List<Individual> bestPerGeneration=new ArrayList<>();
+        List<Individual> bestPerGeneration = new ArrayList<>();  //记录每一代最优个体的集合
+
         List<Individual> pop= ECUtils.initPop(popSize,bound,dimension);
         evaluator.evaluate(pop);
-
-
         for (int k = 0; k < iterations; k++) {
-            //将每一代的最优个体输出的convergence文件夹下
-            Individual clonedBestIndividual = null;
-            clonedBestIndividual =  Collections.min(pop).clone();
+            //记录每一代的最优个体，输出算法的收敛趋势
+            Individual clonedBestIndividual =  Collections.min(pop).clone();
             bestPerGeneration.add(clonedBestIndividual);
-            String info = k+1+"\t"+clonedBestIndividual.getFitness();
-            System.out.println(info);
+            System.out.println(k+1+"\t"+clonedBestIndividual.getFitness());
 
-            //差分变异
-            List<Individual> mutatedPop = mutator.mutate(pop,bound);
-            //交叉
-            List<Individual> offspring = crossover.cross(pop, mutatedPop);
-            evaluator.evaluate(offspring);
-            //从pop和offspring种群中选择最优个体作为下一代种群的个体
-            pop=selector.select(pop, offspring);
-            //记录每一代的最优个体，观察该算法的收敛趋势
+            List<Individual> mutatedPop = mutator.mutate(pop,bound);         //变异
+            List<Individual> offspring = crossover.cross(pop, mutatedPop);  //交叉
+            evaluator.evaluate(offspring);                                  //评价子代种群
+            pop=selector.select(pop, offspring);                           //从父代和子代种群中选择新一代种群
         }
         return bestPerGeneration;
     }
-//    public List<Individual> initPop(int popsize, Bound<Double> bound, int dimension) {
-//        List<Individual> pop = new ArrayList<>();
-//        for (int i = 0; i < popsize; i++) {
-//            Individual individual = new Individual();
-//            List<Double> solution = new ArrayList<>();
-//            for (int j = 0; j < dimension; j++) {
-//                solution.add(bound.getLowerBound()+new Random().nextDouble()*(bound.getUpperBound()-bound.getLowerBound()));
-//            }
-//            individual.setSolution(solution);
-//            pop.add(individual);
-//        }
-//        return pop;
-//    }
 }

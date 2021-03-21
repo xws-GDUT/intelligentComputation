@@ -10,7 +10,7 @@ import intelligentComputation.operator.mutator.impl.RandDifferentMutator;
 import intelligentComputation.operator.selector.impl.DifferentSelector;
 import intelligentComputation.operator.selector.impl.RouletteSelector;
 import intelligentComputation.operator.selector.impl.TopSelector;
-import intelligentComputation.optimizer.impl.DifferentEvolutionOptimizer;
+import intelligentComputation.optimizer.impl.DE;
 import intelligentComputation.optimizer.impl.GeneticAlgorithm2Optimizer;
 import intelligentComputation.optimizer.impl.GeneticAlgorithmOptimizer;
 import intelligentComputation.optimizer.impl.SelfAdaptionDifferentEvolutionOptimizer;
@@ -73,7 +73,7 @@ public class Homework1 {
         Evaluator f1 = new F1();
         Bound<Double> bound = new Bound(-20.0,20.0);
 
-        DifferentEvolutionOptimizer DE32 = new DifferentEvolutionOptimizer();
+        DE DE32 = new DE();
         DE32.setCrossover(new BinCrossover().setRateOfCrossover(0.1))
                 .setMutator(new RandDifferentMutator().setFloatFactor(0.5).setDifferentVector(1))
                 .setSelector(new DifferentSelector());
