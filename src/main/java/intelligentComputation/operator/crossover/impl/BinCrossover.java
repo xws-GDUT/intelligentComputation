@@ -2,11 +2,9 @@ package intelligentComputation.operator.crossover.impl;
 
 import intelligentComputation.Individual;
 import intelligentComputation.operator.crossover.Crossover;
-import intelligentComputation.util.Clone;
+import intelligentComputation.util.ECUtils;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  *@Description 二项式交叉
@@ -20,7 +18,7 @@ public class BinCrossover extends Crossover{
     @Override
     public List<Individual> cross(List<Individual> pop,List<Individual> mutatedPop) {
 
-        List<Individual> clonedPop = Clone.clonePop(pop);
+        List<Individual> clonedPop = ECUtils.clonePop(pop);
         for(int i=0;i<pop.size();i++){
             binomialCross2(clonedPop.get(i),mutatedPop.get(i));
         }

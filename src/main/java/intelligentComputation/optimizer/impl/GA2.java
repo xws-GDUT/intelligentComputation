@@ -7,7 +7,6 @@ import intelligentComputation.operator.crossover.Crossover;
 import intelligentComputation.operator.mutator.Mutator;
 import intelligentComputation.operator.selector.Selector;
 import intelligentComputation.optimizer.Optimizer;
-import intelligentComputation.util.Clone;
 import intelligentComputation.util.ECUtils;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -15,7 +14,6 @@ import lombok.experimental.Accessors;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 @Data
 @Accessors(chain = true)
@@ -43,7 +41,7 @@ public class GA2 extends Optimizer<Individual> {
         evaluator.evaluate(pop);                                            //评价种群
         convergence.add( Collections.min(pop).clone());
         for (int i = 0; i < iterations-1; i++) {
-            List<Individual> tmpPoP = Clone.clonePop(pop);
+            List<Individual> tmpPoP = ECUtils.clonePop(pop);
             crossover.cross(tmpPoP);                  //交叉
             mutator.mutate(tmpPoP,bound);             //变异
             evaluator.evaluate(tmpPoP);               //评价种群

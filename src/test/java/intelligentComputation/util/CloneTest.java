@@ -32,7 +32,7 @@ class CloneTest {
         f1.evaluate(pop);
         System.out.println("原种群："+pop);
 
-        List<Individual> clonePop = Clone.clonePop(pop);
+        List<Individual> clonePop = ECUtils.clonePop(pop);
         System.out.println("克隆种群："+clonePop);
 
         System.out.println("修改克隆种群");

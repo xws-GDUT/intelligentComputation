@@ -26,4 +26,12 @@ public class ECUtils {
         }
         return pop;
     }
+    public static List<Individual> clonePop(List<Individual> pop){
+        List<Individual> clonedPoP = new ArrayList<>();
+        for (int i = 0; i < pop.size(); i++) {
+            Individual individual = pop.get(i).clone();
+            clonedPoP.add(individual);
+        }
+        return clonedPoP;
+    }
 }
