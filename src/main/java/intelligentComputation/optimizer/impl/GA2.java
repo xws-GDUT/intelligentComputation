@@ -41,18 +41,19 @@ public class GA2 extends Optimizer<Individual> {
 
         List<Individual> pop = ECUtils.initPop(popSize, bound, dimension);  //初始化
         evaluator.evaluate(pop);                                            //评价种群
-        for (int i = 0; i < iterations; i++) {
-            bestPerGeneration.add( Collections.min(pop).clone());
-            Individual clonedBestIndividual =  Collections.min(bestPerGeneration).clone();
-            convergence.add(clonedBestIndividual);
-            System.out.println(i+1+"\t"+clonedBestIndividual.getFitness());
-
-            List<Individual> clonePop = Clone.clonePop(pop);
-            crossover.cross(clonePop);                  //交叉
-            mutator.mutate(clonePop,bound);             //变异
-            evaluator.evaluate(clonePop);               //评价种群
-            List<Individual> offspring = selector.select(pop,clonePop);   //从新旧种群中选择最优个体作为新种群
+        convergence.add( Collections.min(pop).clone());
+        for (int i = 0; i < iterations-1; i++) {
+            List<Individual> tmpPoP = Clone.clonePop(pop);
+            crossover.cross(tmpPoP);                  //交叉
+            mutator.mutate(tmpPoP,bound);             //变异
+            evaluator.evaluate(tmpPoP);               //评价种群
+            List<Individual> offspring = selector.select(pop,tmpPoP);   //从新旧种群中选择最优个体作为新种群
             pop=offspring;
+
+            //记录实验数据
+            bestPerGeneration.add(Collections.min(pop).clone());
+            convergence.add(Collections.min(bestPerGeneration).clone());
+            System.out.println(i+1+"\t"+Collections.min(bestPerGeneration).getFitness());
         }
         return convergence;
     }

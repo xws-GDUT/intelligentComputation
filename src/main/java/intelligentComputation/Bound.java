@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Bound<T>{
-    private T lowerBound;
-    private T upperBound;
+public class Bound{
+    private double lowerBound;
+    private double upperBound;
 }

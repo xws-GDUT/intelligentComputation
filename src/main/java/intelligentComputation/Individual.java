@@ -9,6 +9,8 @@ import java.util.List;
 public class Individual implements Cloneable,Comparable<Individual>{
     private List<Double> solution;
     private double fitness;
+    private double concentration;
+    private double incentiveStrength;
 
 
     @Override
@@ -25,6 +27,8 @@ public class Individual implements Cloneable,Comparable<Individual>{
         }
         individual.solution = clonedSolution;
         individual.fitness = this.fitness;
+        individual.concentration = this.concentration;
+        individual.incentiveStrength = this.incentiveStrength;
         return individual;
     }
 

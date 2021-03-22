@@ -41,18 +41,12 @@ public class DE2 extends Optimizer<Individual> {
      */
     @Override
     public List<Individual> optimize(int popSize, int dimension, int iterations, Evaluator evaluator, Bound bound){
-        List<Individual> bestPerGeneration=new ArrayList<>();
+        List<Individual> bestPerGeneration=new ArrayList<>(); //记录每一代最优个体
         List<Individual> pop= ECUtils.initPop(popSize,bound,dimension);
         evaluator.evaluate(pop);
-        double F0 = mutator.getFloatFactor();
-        for (int k = 0; k < iterations; k++) {
-            //将每一代的最优个体输出的convergence文件夹下
-            Individual clonedBestIndividual = null;
-            clonedBestIndividual =  Collections.min(pop).clone();
-            bestPerGeneration.add(clonedBestIndividual);
-            String info = k+1+"\t"+clonedBestIndividual.getFitness();
-            System.out.println(info);
-
+        bestPerGeneration.add(Collections.min(pop).clone());
+        double F0 = mutator.getFloatFactor();//获得初始的浮动因子值
+        for (int k = 0; k < iterations-1; k++) {
             //差分变异不断更新浮动因子
             double lamba = Math.exp((1.0-iterations)/(iterations-k));
             mutator.updateFloatFactor(F0*Math.pow(2,lamba));
@@ -62,7 +56,11 @@ public class DE2 extends Optimizer<Individual> {
             evaluator.evaluate(offspring);
             //从pop和offspring种群中选择最优个体作为下一代种群的个体
             pop=selector.select(pop, offspring);
-            //记录每一代的最优个体，观察该算法的收敛趋势
+
+            //记录实验数据 记录每一代的最优个体，观察该算法的收敛趋势
+            bestPerGeneration.add(Collections.min(pop).clone());
+            String info = k+1+"\t"+Collections.min(pop).getFitness();
+            System.out.println(info);
         }
         return bestPerGeneration;
     }

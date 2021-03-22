@@ -21,8 +21,8 @@ public class RandMutator extends Mutator {
     private double rateOfMutation;
     @Override
     public List<Individual> mutate(List<Individual> pop, Bound bound) {
-        double lowerBound = (double) bound.getLowerBound();
-        double upperBound = (double) bound.getUpperBound();
+        double lowerBound =  bound.getLowerBound();
+        double upperBound =  bound.getUpperBound();
         for (int i = 0; i < pop.size(); i++) {
             for (int j = 0; j < pop.get(i).getSolution().size(); j++) {
                 double p = Math.random();

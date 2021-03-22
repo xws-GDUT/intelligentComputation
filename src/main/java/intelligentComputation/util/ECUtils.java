@@ -13,7 +13,7 @@ import java.util.Random;
  * 进化计算工具类
  */
 public class ECUtils {
-    public static List<Individual> initPop(int popsize, Bound<Double> bound,int dimension){
+    public static List<Individual> initPop(int popsize, Bound bound,int dimension){
         List<Individual> pop = new ArrayList<>();
         for (int i = 0; i < popsize; i++) {
             Individual individual = new Individual();

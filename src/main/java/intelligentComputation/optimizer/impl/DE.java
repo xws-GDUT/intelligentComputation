@@ -45,16 +45,16 @@ public class DE extends Optimizer<Individual> {
 
         List<Individual> pop= ECUtils.initPop(popSize,bound,dimension);
         evaluator.evaluate(pop);
-        for (int k = 0; k < iterations; k++) {
-            //记录每一代的最优个体，输出算法的收敛趋势
-            Individual clonedBestIndividual =  Collections.min(pop).clone();
-            bestPerGeneration.add(clonedBestIndividual);
-            System.out.println(k+1+"\t"+clonedBestIndividual.getFitness());
-
+        bestPerGeneration.add(Collections.min(pop).clone());
+        for (int k = 0; k < iterations-1; k++) {
             List<Individual> mutatedPop = mutator.mutate(pop,bound);         //变异
             List<Individual> offspring = crossover.cross(pop, mutatedPop);  //交叉
             evaluator.evaluate(offspring);                                  //评价子代种群
             pop=selector.select(pop, offspring);                           //从父代和子代种群中选择新一代种群
+
+            //记录每一代的最优个体，输出算法的收敛趋势
+            bestPerGeneration.add(Collections.min(pop).clone());
+            System.out.println(k+1+"\t"+Collections.min(pop).getFitness());
         }
         return bestPerGeneration;
     }
