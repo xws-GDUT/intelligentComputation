@@ -5,7 +5,10 @@ import intelligentComputation.Individual;
 import intelligentComputation.evoluator.Evaluator;
 import intelligentComputation.optimizer.Optimizer;
 import intelligentComputation.util.ECUtils;
+import org.apache.commons.io.FileUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,6 +35,13 @@ public class IA extends Optimizer<Individual> {
         //2. 评价种群
         evaluator.evaluate(pop);
         bestIndividualPerGeneration.add(Collections.min(pop).clone());
+
+        //************日志记录******************
+        StringBuilder log = new StringBuilder();
+        int numOfEvaluate = pop.size(); ;
+        System.out.println("1\t"+bestIndividualPerGeneration.get(0).getFitness());
+        log.append("1\t"+numOfEvaluate+"\t"+Collections.min(pop).getFitness()+"\n");
+        //************日志记录******************
         //3. 免疫循环
         for (int i = 0; i < iterations-1; i++) {
             //3.1 计算个体浓度
@@ -96,6 +106,7 @@ public class IA extends Optimizer<Individual> {
                 }
                 //4.3 克隆抑制
                 evaluator.evaluate(clonedPoP);
+                numOfEvaluate+=clonedPoP.size();
                 immunePop.add(Collections.min(clonedPoP));
             }
             //5. 刷新种群
@@ -103,14 +114,25 @@ public class IA extends Optimizer<Individual> {
             List<Individual> flashPop = ECUtils.initPop(popSize/2, bound, dimension);
             //5.2  计算随机生成种群的另一半种群的亲和度
             evaluator.evaluate(flashPop);
+            numOfEvaluate+=flashPop.size();
             //5.3  合并免疫种群和随机生成种群的另一半种群作为刷新的种群
             immunePop.addAll(flashPop);
             pop = immunePop;
 
-            //记录实验数据
-            System.out.println(i+1+"\t"+Collections.min(pop).getFitness());
+            //************日志记录******************
+            System.out.println(i+2+"\t"+Collections.min(pop).getFitness());
             bestIndividualPerGeneration.add(Collections.min(pop).clone());
+            log.append(i+2+"\t"+numOfEvaluate+"\t"+bestIndividualPerGeneration.get(i+1).getFitness()+"\n");
+            //************日志记录******************
         }
+
+        //************日志记录******************
+        try {
+            FileUtils.write(new File("convergence/IA.txt"),log,"UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //************日志记录******************
         return bestIndividualPerGeneration;
     }
 }

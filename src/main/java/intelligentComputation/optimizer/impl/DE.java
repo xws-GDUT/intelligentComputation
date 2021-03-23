@@ -10,7 +10,10 @@ import intelligentComputation.optimizer.Optimizer;
 import intelligentComputation.util.ECUtils;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.apache.commons.io.FileUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -42,12 +45,17 @@ public class DE extends Optimizer<Individual> {
     @Override
     public List<Individual> optimize(int popSize, int dimension, int iterations, Evaluator evaluator, Bound bound){
         List<Individual> bestPerGeneration = new ArrayList<>();  //记录每一代最优个体的集合
-
         //1. 初始化种群
         List<Individual> pop= ECUtils.initPop(popSize,bound,dimension);
         //2. 评价初始化种群
         evaluator.evaluate(pop);
         bestPerGeneration.add(Collections.min(pop).clone());
+        //************日志记录******************
+        StringBuilder log = new StringBuilder();
+        int numOfEvaluate = pop.size() ;
+        System.out.println("1\t"+bestPerGeneration.get(0).getFitness());
+        log.append("1\t"+numOfEvaluate+"\t"+Collections.min(pop).getFitness()+"\n");
+        //************日志记录******************
         //3. 迭代生成新种群
         for (int k = 0; k < iterations-1; k++) {
             //3.1 变异
@@ -56,13 +64,23 @@ public class DE extends Optimizer<Individual> {
             List<Individual> offspring = crossover.cross(pop, mutatedPop);
             //3.3 评价新种群
             evaluator.evaluate(offspring);
+            numOfEvaluate+=offspring.size();
             //3.4 选择
             pop=selector.select(pop, offspring);
 
-            //记录每一代的最优个体，输出算法的收敛趋势
+            //************日志记录******************
             bestPerGeneration.add(Collections.min(pop).clone());
-            System.out.println(k+1+"\t"+Collections.min(pop).getFitness());
+            System.out.println(k+2+"\t"+Collections.min(pop).getFitness());
+            log.append(k+2+"\t"+numOfEvaluate+"\t"+bestPerGeneration.get(k+1).getFitness()+"\n");
+            //************日志记录******************
         }
+        //************日志记录******************
+        try {
+            FileUtils.write(new File("convergence/DE.txt"),log,"UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //************日志记录******************
         return bestPerGeneration;
     }
 }

@@ -64,10 +64,10 @@ public class OptimizeForF1 {
             sumMeanbestGen += convergenceForFitness.indexOf(bestFitness);  //累加每次运行首次获得最优解的代数
         }
         List<Double> meanConvergenceForFitness = sumConvergenceForFitness.stream().map(x -> x /= numOfRun).collect(Collectors.toList());
-        StringBuilder convergen = new StringBuilder();
-        for (int i = 0; i < meanConvergenceForFitness.size(); i++) {
-            convergen.append(i+1+"\t"+popSize*(i+1)+"\t"+meanConvergenceForFitness.get(i)+"\n");
-        }
+//        StringBuilder convergen = new StringBuilder();
+//        for (int i = 0; i < meanConvergenceForFitness.size(); i++) {
+//            convergen.append(i+1+"\t"+popSize*(i+1)+"\t"+meanConvergenceForFitness.get(i)+"\n");
+//        }
         long totalTime = System.currentTimeMillis()-begin;
         double bestFun = Collections.min(bestFits);
         double worstFun = Collections.max(bestFits);
@@ -82,7 +82,7 @@ public class OptimizeForF1 {
                 +meanFun+"\t"+stdFun+"\t"+sumMeanbestGen/numOfRun+"\t"+sumMeanbestGen*popSize+"\t"
                 +totalTime/(double)numOfRun*(sumMeanbestGen/(double)numOfRun/2000.0)/1000.0+"\t"
                 +totalTime/(double)numOfRun/1000.0,"UTF-8");
-        FileUtils.write(new File("convergence/SGA.txt"),convergen,"UTF-8");
+//        FileUtils.write(new File("convergence/SGA.txt"),convergen,"UTF-8");
     }
     @Test
     public void GA2() throws IOException {
@@ -108,10 +108,10 @@ public class OptimizeForF1 {
             sumMeanbestGen += convergenceForFitness.indexOf(bestFitness);  //累加每次运行首次获得最优解的代数
         }
         List<Double> meanConvergenceForFitness = sumConvergenceForFitness.stream().map(x -> x /= 20.0).collect(Collectors.toList());
-        StringBuilder convergen = new StringBuilder();
-        for (int i = 0; i < meanConvergenceForFitness.size(); i++) {
-            convergen.append(i+1+"\t"+popSize*(i+1)+"\t"+meanConvergenceForFitness.get(i)+"\n");
-        }
+//        StringBuilder convergen = new StringBuilder();
+//        for (int i = 0; i < meanConvergenceForFitness.size(); i++) {
+//            convergen.append(i+1+"\t"+popSize*(i+1)+"\t"+meanConvergenceForFitness.get(i)+"\n");
+//        }
         long totalTime = System.currentTimeMillis()-begin;
         double bestFun = Collections.min(bestFits);
         double worstFun = Collections.max(bestFits);
@@ -126,7 +126,7 @@ public class OptimizeForF1 {
                 +meanFun+"\t"+stdFun+"\t"+sumMeanbestGen/numOfRun+"\t"+sumMeanbestGen*popSize+"\t"
                 +totalTime/(double)numOfRun*(sumMeanbestGen/(double)numOfRun/2000.0)/1000.0+"\t"
                 +totalTime/(double)numOfRun/1000.0,"UTF-8");
-        FileUtils.write(new File("convergence/GA2.txt"),convergen,"UTF-8");
+//        FileUtils.write(new File("convergence/GA2.txt"),convergen,"UTF-8");
     }
     @Test
     public void SDE() throws IOException {
@@ -151,10 +151,10 @@ public class OptimizeForF1 {
             sumMeanbestGen += convergenceForFitness.indexOf(bestFitness);  //累加每次运行首次获得最优解的代数
         }
         List<Double> meanConvergenceForFitness = sumConvergenceForFitness.stream().map(x -> x /= 20.0).collect(Collectors.toList());
-        StringBuilder convergen = new StringBuilder();
-        for (int i = 0; i < meanConvergenceForFitness.size(); i++) {
-            convergen.append(i+1+"\t"+popSize*(i+1)+"\t"+meanConvergenceForFitness.get(i)+"\n");
-        }
+//        StringBuilder convergen = new StringBuilder();
+//        for (int i = 0; i < meanConvergenceForFitness.size(); i++) {
+//            convergen.append(i+1+"\t"+popSize*(i+1)+"\t"+meanConvergenceForFitness.get(i)+"\n");
+//        }
         long totalTime = System.currentTimeMillis()-begin;
         double bestFun = Collections.min(bestFits);
         double worstFun = Collections.max(bestFits);
@@ -169,7 +169,7 @@ public class OptimizeForF1 {
                 +meanFun+"\t"+stdFun+"\t"+sumMeanbestGen/numOfRun+"\t"+sumMeanbestGen*popSize+"\t"
                 +totalTime/(double)numOfRun*(sumMeanbestGen/(double)numOfRun/2000.0)/1000.0+"\t"
                 +totalTime/(double)numOfRun/1000.0,"UTF-8");
-        FileUtils.write(new File("convergence/SDE.txt"),convergen,"UTF-8");
+//        FileUtils.write(new File("convergence/SDE.txt"),convergen,"UTF-8");
     }
     @Test
     public void DE2() throws IOException {
@@ -194,10 +194,10 @@ public class OptimizeForF1 {
             sumMeanbestGen += convergenceForFitness.indexOf(bestFitness);  //累加每次运行首次获得最优解的代数
         }
         List<Double> meanConvergenceForFitness = sumConvergenceForFitness.stream().map(x -> x /= 20.0).collect(Collectors.toList());
-        StringBuilder convergen = new StringBuilder();
-        for (int i = 0; i < meanConvergenceForFitness.size(); i++) {
-            convergen.append(i+1+"\t"+popSize*(i+1)+"\t"+meanConvergenceForFitness.get(i)+"\n");
-        }
+//        StringBuilder convergen = new StringBuilder();
+//        for (int i = 0; i < meanConvergenceForFitness.size(); i++) {
+//            convergen.append(i+1+"\t"+popSize*(i+1)+"\t"+meanConvergenceForFitness.get(i)+"\n");
+//        }
         long totalTime = System.currentTimeMillis()-begin;
         double bestFun = Collections.min(bestFits);
         double worstFun = Collections.max(bestFits);
@@ -212,7 +212,7 @@ public class OptimizeForF1 {
                 +meanFun+"\t"+stdFun+"\t"+sumMeanbestGen/numOfRun+"\t"+sumMeanbestGen*popSize+"\t"
                 +totalTime/(double)numOfRun*(sumMeanbestGen/(double)numOfRun/2000.0)/1000.0+"\t"
                 +totalTime/(double)numOfRun/1000.0,"UTF-8");
-        FileUtils.write(new File("convergence/DE2.txt"),convergen,"UTF-8");
+//        FileUtils.write(new File("convergence/DE2.txt"),convergen,"UTF-8");
     }
 
     @Test
@@ -234,11 +234,11 @@ public class OptimizeForF1 {
             sumMeanbestGen += convergenceForFitness.indexOf(bestFitness);  //累加每次运行首次获得最优解的代数
         }
         List<Double> meanConvergenceForFitness = sumConvergenceForFitness.stream().map(x -> x /= 20.0).collect(Collectors.toList());
-        StringBuilder convergen = new StringBuilder();
-        convergen.append(1+"\t"+100+"\t"+meanConvergenceForFitness.get(0)+"\n");
-        for (int i = 1; i < meanConvergenceForFitness.size(); i++) {
-            convergen.append(i+1+"\t"+(100+(600*i))+"\t"+meanConvergenceForFitness.get(i)+"\n");
-        }
+//        StringBuilder convergen = new StringBuilder();
+//        convergen.append(1+"\t"+100+"\t"+meanConvergenceForFitness.get(0)+"\n");
+//        for (int i = 1; i < meanConvergenceForFitness.size(); i++) {
+//            convergen.append(i+1+"\t"+(100+(600*i))+"\t"+meanConvergenceForFitness.get(i)+"\n");
+//        }
         long totalTime = System.currentTimeMillis()-begin;
         double bestFun = Collections.min(bestFits);
         double worstFun = Collections.max(bestFits);
@@ -253,7 +253,7 @@ public class OptimizeForF1 {
                 +meanFun+"\t"+stdFun+"\t"+sumMeanbestGen/numOfRun+"\t"+sumMeanbestGen*50+"\t"
                 +totalTime/(double)numOfRun*(sumMeanbestGen/(double)numOfRun/2000.0)/1000.0+"\t"
                 +totalTime/(double)numOfRun/1000.0,"UTF-8");
-        FileUtils.write(new File("convergence/IA.txt"),convergen,"UTF-8");
+//        FileUtils.write(new File("convergence/IA.txt"),convergen,"UTF-8");
     }
 
 

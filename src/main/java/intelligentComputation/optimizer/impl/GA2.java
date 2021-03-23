@@ -10,7 +10,10 @@ import intelligentComputation.optimizer.Optimizer;
 import intelligentComputation.util.ECUtils;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.apache.commons.io.FileUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -37,22 +40,47 @@ public class GA2 extends Optimizer<Individual> {
         List<Individual> bestPerGeneration = new ArrayList<>();  //记录每一代最优个体的集合
         List<Individual> convergence = new ArrayList<>();     //记录算法收敛初始的集合
 
-        List<Individual> pop = ECUtils.initPop(popSize, bound, dimension);  //初始化
-        evaluator.evaluate(pop);                                            //评价种群
+        //1. 初始化种群
+        List<Individual> pop = ECUtils.initPop(popSize, bound, dimension);
+        //2. 评价种群
+        evaluator.evaluate(pop);
+
         convergence.add( Collections.min(pop).clone());
+        //************日志记录******************
+        StringBuilder log = new StringBuilder();
+        int numOfEvaluate =  pop.size() ;
+        System.out.println("1\t"+convergence.get(0).getFitness());
+        log.append("1\t"+numOfEvaluate+"\t"+Collections.min(pop).getFitness()+"\n");
+        //************日志记录******************
+        //3. 种群演化
         for (int i = 0; i < iterations-1; i++) {
             List<Individual> tmpPoP = ECUtils.clonePop(pop);
-            crossover.cross(tmpPoP);                  //交叉
-            mutator.mutate(tmpPoP,bound);             //变异
-            evaluator.evaluate(tmpPoP);               //评价种群
-            List<Individual> offspring = selector.select(pop,tmpPoP);   //从新旧种群中选择最优个体作为新种群
+            //3.1 交叉
+            crossover.cross(tmpPoP);
+            //3.2 变异
+            mutator.mutate(tmpPoP,bound);
+            //3.3 评价种群
+            evaluator.evaluate(tmpPoP);
+            numOfEvaluate += tmpPoP.size();
+            //3.4 从新旧种群中选择最优个体作为新种群
+            List<Individual> offspring = selector.select(pop,tmpPoP);
             pop=offspring;
 
-            //记录实验数据
+            //************日志记录******************
             bestPerGeneration.add(Collections.min(pop).clone());
             convergence.add(Collections.min(bestPerGeneration).clone());
             System.out.println(i+1+"\t"+Collections.min(bestPerGeneration).getFitness());
+            log.append(i+2+"\t"+numOfEvaluate+"\t"+convergence.get(i+1).getFitness()+"\n");
+            //************日志记录******************
         }
+
+        //************日志记录******************
+        try {
+            FileUtils.write(new File("convergence/GA2.txt"),log,"UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //************日志记录******************
         return convergence;
     }
 }

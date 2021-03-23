@@ -10,7 +10,10 @@ import intelligentComputation.optimizer.Optimizer;
 import intelligentComputation.util.ECUtils;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.apache.commons.io.FileUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -48,8 +51,13 @@ public class DE2 extends Optimizer<Individual> {
         List<Individual> pop= ECUtils.initPop(popSize,bound,dimension);
         //2. 评价初始化种群
         evaluator.evaluate(pop);
-
         bestPerGeneration.add(Collections.min(pop).clone());
+        //************日志记录******************
+        StringBuilder log = new StringBuilder();
+        int numOfEvaluate = pop.size() ;
+        System.out.println("1\t"+bestPerGeneration.get(0).getFitness());
+        log.append("1\t"+numOfEvaluate+"\t"+Collections.min(pop).getFitness()+"\n");
+        //************日志记录******************
         //3. 迭代生成新种群
         for (int k = 0; k < iterations-1; k++) {
             //3.1 更新浮动因子
@@ -60,14 +68,23 @@ public class DE2 extends Optimizer<Individual> {
             //3.3 交叉
             List<Individual> offspring = crossover.cross(pop, mutatedPop);
             evaluator.evaluate(offspring);
+            numOfEvaluate+=offspring.size();
             //3.4 选择
             pop=selector.select(pop, offspring);
 
-            //记录实验数据 记录每一代的最优个体，观察该算法的收敛趋势
+            //************日志记录******************
             bestPerGeneration.add(Collections.min(pop).clone());
-            String info = k+1+"\t"+Collections.min(pop).getFitness();
-            System.out.println(info);
+            System.out.println(k+2+"\t"+Collections.min(pop).getFitness());
+            log.append(k+2+"\t"+numOfEvaluate+"\t"+bestPerGeneration.get(k+1).getFitness()+"\n");
+            //************日志记录******************
         }
+        //************日志记录******************
+        try {
+            FileUtils.write(new File("convergence/DE2.txt"),log,"UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //************日志记录******************
         return bestPerGeneration;
     }
 }
