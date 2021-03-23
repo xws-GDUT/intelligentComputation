@@ -14,11 +14,10 @@ import lombok.experimental.Accessors;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 @Data
 @Accessors(chain = true)
-public class GA extends Optimizer<Individual> {
+public class SGA extends Optimizer<Individual> {
 
     private Selector selector;
     private Mutator mutator;
@@ -37,12 +36,15 @@ public class GA extends Optimizer<Individual> {
     public List<Individual> optimize(int popSize, int dimension, int iterations, Evaluator evaluator, Bound bound) {
         List<Individual> bestPerGeneration = new ArrayList<>();  //记录每一代最优个体的集合
         List<Individual> convergence = new ArrayList<>();     //记录算法收敛初始的集合
+//        StringBuilder log = new StringBuilder();
 
         //1. 种群初始化
         List<Individual> pop = ECUtils.initPop(popSize, bound, dimension);
         //2. 评价种群
         evaluator.evaluate(pop);
         convergence.add(Collections.min(pop).clone());
+        System.out.println("1\t"+convergence.get(0).getFitness());
+//        log.append("1\t"+"\t"+convergence.get(0)+"\n");
         for (int i = 0; i < iterations-1; i++) {
             List<Individual> offspring = selector.select(pop);   //选择
             crossover.cross(offspring);                          //交叉
@@ -53,7 +55,8 @@ public class GA extends Optimizer<Individual> {
             //记录实验数据
             bestPerGeneration.add(Collections.min(pop).clone());
             convergence.add(Collections.min(bestPerGeneration).clone());
-            System.out.println(i+1+"\t"+Collections.min(bestPerGeneration).getFitness());
+            System.out.println(i+2+"\t"+Collections.min(bestPerGeneration).getFitness());
+//            log.append(i+2+"\t"+Constant.NUM_OF_EVALUATE+"\t"+convergence.get(i+1)+"\n");
         }
         return convergence;
     }

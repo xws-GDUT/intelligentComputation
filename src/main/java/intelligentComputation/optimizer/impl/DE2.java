@@ -42,19 +42,25 @@ public class DE2 extends Optimizer<Individual> {
     @Override
     public List<Individual> optimize(int popSize, int dimension, int iterations, Evaluator evaluator, Bound bound){
         List<Individual> bestPerGeneration=new ArrayList<>(); //记录每一代最优个体
-        List<Individual> pop= ECUtils.initPop(popSize,bound,dimension);
-        evaluator.evaluate(pop);
-        bestPerGeneration.add(Collections.min(pop).clone());
         double F0 = mutator.getFloatFactor();//获得初始的浮动因子值
+
+        //1. 初始化种群
+        List<Individual> pop= ECUtils.initPop(popSize,bound,dimension);
+        //2. 评价初始化种群
+        evaluator.evaluate(pop);
+
+        bestPerGeneration.add(Collections.min(pop).clone());
+        //3. 迭代生成新种群
         for (int k = 0; k < iterations-1; k++) {
-            //差分变异不断更新浮动因子
+            //3.1 更新浮动因子
             double lamba = Math.exp((1.0-iterations)/(iterations-k));
             mutator.updateFloatFactor(F0*Math.pow(2,lamba));
+            //3.2 变异
             List<Individual> mutatedPop = mutator.mutate(pop,bound);
-            //交叉
+            //3.3 交叉
             List<Individual> offspring = crossover.cross(pop, mutatedPop);
             evaluator.evaluate(offspring);
-            //从pop和offspring种群中选择最优个体作为下一代种群的个体
+            //3.4 选择
             pop=selector.select(pop, offspring);
 
             //记录实验数据 记录每一代的最优个体，观察该算法的收敛趋势

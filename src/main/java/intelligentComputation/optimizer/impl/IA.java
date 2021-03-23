@@ -27,18 +27,18 @@ public class IA extends Optimizer<Individual> {
         List<Individual> bestIndividualPerGeneration = new ArrayList<>();
         double deta = (bound.getUpperBound()-bound.getLowerBound())/2.0;
 
-        //1. 初始化
+        //1. 初始化种群
         List<Individual> pop = ECUtils.initPop(popSize, bound, dimension);
-        //2. 计算亲和度  =  评价种群
+        //2. 评价种群
         evaluator.evaluate(pop);
         bestIndividualPerGeneration.add(Collections.min(pop).clone());
         //3. 免疫循环
         for (int i = 0; i < iterations-1; i++) {
-            //1. 计算个体浓度
+            //3.1 计算个体浓度
             for (int j = 0; j < pop.size(); j++) {
                 double degreeOfSimilarity = 0.0 ;
                 int numOfSimilarity = 0;
-                //1.1 计算个体间的亲和度 = 个体间的相似度
+                //3.1.1 计算个体间的亲和度 = 个体间的相似度
                 Individual individual1 = pop.get(j);
                 for (int k = 0; k < pop.size(); k++) {
                     Individual individual = pop.get(k);
@@ -51,15 +51,15 @@ public class IA extends Optimizer<Individual> {
                         numOfSimilarity++;
                     }
                 }
-                //1.2 计算浓度
+                //3.1.2 计算浓度
                 individual1.setConcentration((double)numOfSimilarity/pop.size());
             }
-            //2. 计算激励度
+            //3.2 计算激励度
             for (int j = 0; j < pop.size(); j++) {
                 Individual individual = pop.get(j);
                 individual.setIncentiveStrength(a*individual.getFitness()-b*individual.getConcentration());
             }
-            //3. 免疫操作
+            //3.3. 免疫选择
             List<Individual> immunePop = new ArrayList<>();
             pop.sort((o1,o2)->{
                 if(o1.getIncentiveStrength()>o2.getIncentiveStrength()){
@@ -73,12 +73,12 @@ public class IA extends Optimizer<Individual> {
             List<Individual> firstHalf = pop.subList(0,popSize/2);
             double neighborhoodRange=deta/(i+1.0);
             for (int j = 0; j < firstHalf.size(); j++) {
-                //3.1 克隆
+                //4.1 克隆
                 List<Individual> clonedPoP = new ArrayList<>();
                 for (int k = 0; k < numOfClone; k++) {
                     clonedPoP.add(pop.get(j).clone());
                 }
-                //3.2 变异  =  变异
+                //4.2 变异
                 double lowerBound =  bound.getLowerBound();
                 double upperBound =  bound.getUpperBound();
                 for (int k = 1; k < clonedPoP.size(); k++) {
@@ -94,14 +94,16 @@ public class IA extends Optimizer<Individual> {
                         }
                     }
                 }
-                //3.3 克隆抑制  =  选择
+                //4.3 克隆抑制
                 evaluator.evaluate(clonedPoP);
                 immunePop.add(Collections.min(clonedPoP));
             }
-            //4. 种群刷新
-            List<Individual> flashPop = ECUtils.initPop(50, bound, 10);
-            //4.1 评价
+            //5. 刷新种群
+            //5.1 随机生成种群的另一半种群
+            List<Individual> flashPop = ECUtils.initPop(popSize/2, bound, dimension);
+            //5.2  计算随机生成种群的另一半种群的亲和度
             evaluator.evaluate(flashPop);
+            //5.3  合并免疫种群和随机生成种群的另一半种群作为刷新的种群
             immunePop.addAll(flashPop);
             pop = immunePop;
 

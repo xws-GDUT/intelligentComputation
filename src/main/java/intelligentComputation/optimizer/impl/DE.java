@@ -43,14 +43,21 @@ public class DE extends Optimizer<Individual> {
     public List<Individual> optimize(int popSize, int dimension, int iterations, Evaluator evaluator, Bound bound){
         List<Individual> bestPerGeneration = new ArrayList<>();  //记录每一代最优个体的集合
 
+        //1. 初始化种群
         List<Individual> pop= ECUtils.initPop(popSize,bound,dimension);
+        //2. 评价初始化种群
         evaluator.evaluate(pop);
         bestPerGeneration.add(Collections.min(pop).clone());
+        //3. 迭代生成新种群
         for (int k = 0; k < iterations-1; k++) {
-            List<Individual> mutatedPop = mutator.mutate(pop,bound);         //变异
-            List<Individual> offspring = crossover.cross(pop, mutatedPop);  //交叉
-            evaluator.evaluate(offspring);                                  //评价子代种群
-            pop=selector.select(pop, offspring);                           //从父代和子代种群中选择新一代种群
+            //3.1 变异
+            List<Individual> mutatedPop = mutator.mutate(pop,bound);
+            //3.2 交叉
+            List<Individual> offspring = crossover.cross(pop, mutatedPop);
+            //3.3 评价新种群
+            evaluator.evaluate(offspring);
+            //3.4 选择
+            pop=selector.select(pop, offspring);
 
             //记录每一代的最优个体，输出算法的收敛趋势
             bestPerGeneration.add(Collections.min(pop).clone());
