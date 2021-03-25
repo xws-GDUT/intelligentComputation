@@ -25,19 +25,19 @@ public class ExpCrossover extends Crossover {
             int popisitonOfCrossover = new Random().nextInt(pop.get(0).getSolution().size());
             int k=0;
             for(k=0;k<popisitonOfCrossover;k++){
-                solution.add(pop.get(i).getSolution().get(k));
+                solution.add((Double) pop.get(i).getSolution().get(k));
             }
-            solution.add(mutatedPop.get(i).getSolution().get(k));
+            solution.add((Double) mutatedPop.get(i).getSolution().get(k));
             for(k= k+1 ;k< pop.get(0).getSolution().size(); k++) {
                 double p = Math.random();
                 if (p <= rateOfCrossover) {
-                    solution.add(mutatedPop.get(i).getSolution().get(k));
+                    solution.add((Double) mutatedPop.get(i).getSolution().get(k));
                 }else{
                     break;
                 }
             }
             while(k < pop.get(0).getSolution().size()){
-                solution.add(pop.get(i).getSolution().get(k));
+                solution.add((Double) pop.get(i).getSolution().get(k));
                 k++;
             }
 

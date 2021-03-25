@@ -33,7 +33,7 @@ public class OnePointCrossover extends Crossover {
     private void onePointCross(Individual i1,Individual i2){
         int point = new Random().nextInt(i1.getSolution().size());
         for (int i = point; i < i1.getSolution().size(); i++) {
-            double temp =  i1.getSolution().get(i);
+            double temp = (double) i1.getSolution().get(i);
             i1.getSolution().set(i,i2.getSolution().get(i));
             i2.getSolution().set(i,temp);
         }

@@ -33,9 +33,9 @@ public class RandDifferentMutator extends Mutator {
                     List<Double> solution = new ArrayList<>();
                     List<Integer> indexes = getRandomExcludeNum(pop.size(),3,i);
                     for (int j = 0; j < pop.get(0).getSolution().size(); j++) {
-                        double i1= pop.get(indexes.get(0)).getSolution().get(j);
-                        double i2= pop.get(indexes.get(1)).getSolution().get(j);
-                        double i3= pop.get(indexes.get(2)).getSolution().get(j);
+                        double i1= (double) pop.get(indexes.get(0)).getSolution().get(j);
+                        double i2= (double) pop.get(indexes.get(1)).getSolution().get(j);
+                        double i3= (double) pop.get(indexes.get(2)).getSolution().get(j);
                         double value= i1+floatFactor*(i2-i3);
                         value=dealWithOutOfBound(value,bound);
                         solution.add(value);
@@ -51,11 +51,11 @@ public class RandDifferentMutator extends Mutator {
                     //获得五个在[0,99]且两两不等的五个数
                     List<Integer> indexes = getRandomExcludeNum(pop.size(),5,i);
                     for (int j = 0; j < pop.get(0).getSolution().size(); j++) {
-                        double i1= pop.get(indexes.get(0)).getSolution().get(j);
-                        double i2= pop.get(indexes.get(1)).getSolution().get(j);
-                        double i3= pop.get(indexes.get(2)).getSolution().get(j);
-                        double i4= pop.get(indexes.get(3)).getSolution().get(j);
-                        double i5= pop.get(indexes.get(4)).getSolution().get(j);
+                        double i1= (double) pop.get(indexes.get(0)).getSolution().get(j);
+                        double i2= (double) pop.get(indexes.get(1)).getSolution().get(j);
+                        double i3= (double) pop.get(indexes.get(2)).getSolution().get(j);
+                        double i4= (double) pop.get(indexes.get(3)).getSolution().get(j);
+                        double i5= (double) pop.get(indexes.get(4)).getSolution().get(j);
                         double value = i1 + floatFactor * (i2 + i3 - i4 - i5);
                         value=dealWithOutOfBound(value,bound);
                         solution.add(value);

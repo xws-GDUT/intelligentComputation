@@ -35,7 +35,7 @@ public abstract class Crossover{
         for(int j = 0; j < i1.getSolution().size(); j++){
             double p = new Random().nextDouble();
             if(p < rateOfCrossover){
-                double temp =  i1.getSolution().get(j);
+                double temp = (double) i1.getSolution().get(j);
                 i1.getSolution().set(j,i2.getSolution().get(j));
                 i2.getSolution().set(j,temp);
             }
@@ -53,7 +53,7 @@ public abstract class Crossover{
             double p = Math.random();
             if( p > rateOfCrossover && popisitonOfCrossover != j){ // 不交叉
             }else{ //交叉
-                double temp =  i1.getSolution().get(j);
+                double temp = (double) i1.getSolution().get(j);
                 i1.getSolution().set(j,i2.getSolution().get(j));
                 i2.getSolution().set(j,temp);
             }

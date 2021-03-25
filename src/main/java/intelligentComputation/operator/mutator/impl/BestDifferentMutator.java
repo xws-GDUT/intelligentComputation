@@ -36,9 +36,9 @@ public class BestDifferentMutator extends Mutator {
                     List<Double> solution = new ArrayList<>();
                     List<Integer> indexes = getRamdonExcludeNum(pop.size(),2,i);
                     for (int j = 0; j < pop.get(0).getSolution().size(); j++) {
-                        double best = bestIndividual.getSolution().get(j);
-                        double i1= pop.get(indexes.get(0)).getSolution().get(j);
-                        double i2= pop.get(indexes.get(1)).getSolution().get(j);
+                        double best = (double) bestIndividual.getSolution().get(j);
+                        double i1= (double) pop.get(indexes.get(0)).getSolution().get(j);
+                        double i2= (double) pop.get(indexes.get(1)).getSolution().get(j);
                         double value =best + floatFactor * (i1 - i2);
                         value=dealWithOutOfBound(value,bound);
                         solution.add(value);
@@ -53,11 +53,11 @@ public class BestDifferentMutator extends Mutator {
                     List<Double> solution = new ArrayList<Double>();
                     List<Integer> indexes = getRamdonExcludeNum(pop.size(), 4, i);
                     for (int j = 0; j < pop.get(0).getSolution().size(); j++) {
-                        double best = bestIndividual.getSolution().get(j);
-                        double i1= pop.get(indexes.get(0)).getSolution().get(j);
-                        double i2= pop.get(indexes.get(1)).getSolution().get(j);
-                        double i3= pop.get(indexes.get(2)).getSolution().get(j);
-                        double i4= pop.get(indexes.get(3)).getSolution().get(j);
+                        double best = (double) bestIndividual.getSolution().get(j);
+                        double i1= (double) pop.get(indexes.get(0)).getSolution().get(j);
+                        double i2= (double) pop.get(indexes.get(1)).getSolution().get(j);
+                        double i3= (double) pop.get(indexes.get(2)).getSolution().get(j);
+                        double i4= (double) pop.get(indexes.get(3)).getSolution().get(j);
                         double value = best+floatFactor*(i1+i2-i3-i4);
                         value = dealWithOutOfBound(value, bound);
                         solution.add(value);

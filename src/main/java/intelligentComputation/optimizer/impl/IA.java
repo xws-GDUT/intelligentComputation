@@ -54,7 +54,7 @@ public class IA extends Optimizer<Individual> {
                     Individual individual = pop.get(k);
                     double sum = 0.0;
                     for (int l = 0; l < individual1.getSolution().size(); l++) {
-                        sum += Math.pow(individual1.getSolution().get(l)-individual.getSolution().get(l),2);
+                        sum += Math.pow((double)individual1.getSolution().get(l)-(double)individual.getSolution().get(l),2);
                     }
                     degreeOfSimilarity = Math.sqrt(sum);
                     if(degreeOfSimilarity<threshollOfSimilarity){
