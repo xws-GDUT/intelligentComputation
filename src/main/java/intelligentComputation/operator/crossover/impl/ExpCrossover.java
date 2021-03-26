@@ -15,7 +15,7 @@ import java.util.Random;
 
 
 
-public class ExpCrossover extends Crossover {
+public class ExpCrossover extends Crossover<Individual> {
     @Override
     public List cross(List<Individual> pop, List<Individual> mutatedPop) {
         List<Individual> offspring = new ArrayList<>();

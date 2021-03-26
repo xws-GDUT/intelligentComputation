@@ -14,7 +14,7 @@ import java.util.List;
  *@email wansenxu@163.com
  */
 
-public class TopSelector extends Selector {
+public class TopSelector extends Selector<Individual> {
     @Override
     public List<Individual> select(List<Individual> pop,List<Individual> offspring) {
         List<Individual> nextPop = new ArrayList<>();

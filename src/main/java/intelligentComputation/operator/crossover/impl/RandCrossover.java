@@ -14,7 +14,7 @@ import java.util.Random;
  * 该策略存在问题：随机方案存在已经交叉后的个体继续与其他个体进行交叉
  */
 
-public class RandCrossover extends Crossover {
+public class RandCrossover extends Crossover<Individual> {
     @Override
     public void cross(List<Individual> pop) {
         for (int i = 0; i < pop.size(); i++) {

@@ -10,11 +10,11 @@ import java.util.List;
  *@email wansenxu@163.com
  */
 
-public abstract class Selector{
-    public List<Individual> select(List<Individual> pop, List<Individual> offspring){
+public abstract class Selector<T>{
+    public List<T> select(List<T> pop, List<T> offspring){
         return null;
     }
-    public List<Individual> select(List<Individual> pop){
+    public List<T> select(List<T> pop){
         return null;
     }
 }

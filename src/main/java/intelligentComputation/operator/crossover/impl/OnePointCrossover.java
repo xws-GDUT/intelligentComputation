@@ -11,7 +11,7 @@ import java.util.Random;
  * @email wansenxu@163.com、
  * 交叉策略：单点交叉
  */
-public class OnePointCrossover extends Crossover {
+public class OnePointCrossover extends Crossover<Individual> {
     @Override
     public void cross(List<Individual> pop) {
         for (int i = 0; i < pop.size(); i+=2) {

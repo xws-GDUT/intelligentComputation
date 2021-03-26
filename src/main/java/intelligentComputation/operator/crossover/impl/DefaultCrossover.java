@@ -13,7 +13,7 @@ import java.util.Random;
  *交叉策略: 奇偶方案+二项式交叉  解决随机方案存在已经交叉后的个体继续与其他个体进行交叉
  */
 
-public class DefaultCrossover extends Crossover {
+public class DefaultCrossover extends Crossover<Individual> {
     @Override
     public void cross(List<Individual> pop) {
         for (int i = 0; i < pop.size(); i+=2) {

@@ -13,7 +13,7 @@ import java.util.List;
  * 交叉策略：父子映射方案+二项式交叉（随机一维分量必定交叉）
  */
 
-public class BinCrossover extends Crossover{
+public class BinCrossover extends Crossover<Individual>{
 
     @Override
     public List<Individual> cross(List<Individual> pop,List<Individual> mutatedPop) {

@@ -19,7 +19,7 @@ import java.util.Random;
 
 @Data
 @Accessors(chain = true)
-public class BestDifferentMutator extends Mutator {
+public class BestDifferentMutator extends Mutator<Individual> {
     private int differentVector;
     private double floatFactor;
 //    private Bound bound;

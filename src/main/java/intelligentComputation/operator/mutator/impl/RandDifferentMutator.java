@@ -18,7 +18,7 @@ import java.util.Random;
 
 @Data
 @Accessors(chain = true)
-public class RandDifferentMutator extends Mutator {
+public class RandDifferentMutator extends Mutator<Individual> {
     private int differentVector;
     private double floatFactor;
 //    private Bound bound;

@@ -13,7 +13,7 @@ import java.util.Random;
  *@email wansenxu@163.com
  */
 
-public class RouletteSelector extends Selector {
+public class RouletteSelector extends Selector<Individual> {
     @Deprecated
     public List<Individual> select(List<Individual> pop, List<Individual> offspring) {
         return null;

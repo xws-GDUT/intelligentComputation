@@ -13,7 +13,7 @@ import java.util.Random;
  * 交叉策略：君主方案+二项式交叉
  */
 
-public class EmperorCrossover extends Crossover {
+public class EmperorCrossover extends Crossover<Individual> {
     @Override
     public void cross(List<Individual> pop) {
         Individual bestIndividual = Collections.min(pop).clone();

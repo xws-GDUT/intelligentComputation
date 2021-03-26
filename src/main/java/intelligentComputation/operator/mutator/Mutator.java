@@ -11,12 +11,12 @@ import java.util.List;
  *@email wansenxu@163.com
  */
 
-public abstract class Mutator {
+public abstract class Mutator<T> {
     public void updateFloatFactor(double value){
 
     }
     public double getFloatFactor(){
         return 0;
     }
-    public abstract List<Individual> mutate(List<Individual> pop, Bound bound);
+    public abstract List<T> mutate(List<T> pop, Bound bound);
 }

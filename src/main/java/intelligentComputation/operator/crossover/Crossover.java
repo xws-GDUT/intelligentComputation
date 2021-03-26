@@ -12,14 +12,14 @@ import java.util.Random;
  *@email wansenxu@163.com
  */
 
-public abstract class Crossover{
+public abstract class Crossover<T>{
     protected double rateOfCrossover;
     //双种群间的交叉
-    public List<Individual> cross(List<Individual> pop, List<Individual> mutatedPop){
+    public List<T> cross(List<T> pop, List<T> mutatedPop){
         return null;
     }
     //单种群内的交叉
-    public void cross(List<Individual> pop){
+    public void cross(List<T> pop){
     }
 
     public Crossover setRateOfCrossover(double value) {
