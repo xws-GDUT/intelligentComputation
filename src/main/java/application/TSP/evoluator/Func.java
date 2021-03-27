@@ -2,9 +2,8 @@ package application.TSP.evoluator;
 
 
 import application.TSP.pojo.Graph;
+import application.TSP.pojo.Individual;
 import application.TSP.pojo.Vertex;
-import intelligentComputation.Individual;
-import intelligentComputation.evoluator.Evaluator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.List;
 /**
  * Created by wansenxu@163.com on 2020/12/10
  */
-public class Func implements Evaluator<Individual> {
+public class Func implements Evaluator {
     private static Graph GRAPH = null;
     static {
         Graph graph = new Graph();
@@ -91,20 +90,31 @@ public class Func implements Evaluator<Individual> {
         GRAPH = graph;
     }
 
+//    @Override
+//    public void evaluate(List<Individual> pop) {
+//        for (int i = 0; i < pop.size(); i++) {
+//            Individual individual = pop.get(i);
+//            List<Double> solution = individual.getSolution();
+//            double totalDistance = 0.0;
+//            for (int j = 0; j < solution.size()-1; j++) {
+//                Vertex vertex = GRAPH.getVertex(String.valueOf(solution.get(j).intValue()));
+//                double dist = vertex.distanceFrom(String.valueOf(solution.get(j + 1).intValue()));
+//                totalDistance+=dist;
+//            }
+//            individual.setFitness(totalDistance);
+//
+//        }
+//    }
+
     @Override
-    public void evaluate(List<Individual> pop) {
-        for (int i = 0; i < pop.size(); i++) {
-            Individual individual = pop.get(i);
-            List<Double> solution = individual.getSolution();
-            double totalDistance = 0.0;
-            for (int j = 0; j < solution.size()-1; j++) {
-                Vertex vertex = GRAPH.getVertex(String.valueOf(solution.get(j).intValue()));
-                double dist = vertex.distanceFrom(String.valueOf(solution.get(j + 1).intValue()));
-                totalDistance+=dist;
-            }
-            individual.setFitness(totalDistance);
-
+    public double evaluate(Individual individual) {
+        List solution = individual.getSolution();
+        double totalDistance = 0.0;
+        for (int i = 0; i < solution.size()-1; i++) {
+            Vertex vertex = GRAPH.getVertex(String.valueOf((int)solution.get(i)));
+            double dist = vertex.distanceFrom(String.valueOf((int)solution.get(i + 1)));
+            totalDistance+=dist;
         }
+        return totalDistance;
     }
-
 }
