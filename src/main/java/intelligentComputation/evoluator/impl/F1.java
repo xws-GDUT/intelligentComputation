@@ -13,9 +13,9 @@ public class F1 implements Evaluator<Individual> {
     @Override
     public void evaluate(List<Individual> pop) {
         for (int i = 0; i < pop.size(); i++) {
-            double sum = 0;
             Individual individual = pop.get(i);
             List<Double> solution = individual.getSolution();
+            double sum = 0;
             for (int j = 0; j < solution.size(); j++) {
                 sum+= Math.pow(solution.get(j),2);
             }
