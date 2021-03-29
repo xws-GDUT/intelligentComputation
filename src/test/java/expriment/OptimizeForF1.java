@@ -64,10 +64,6 @@ public class OptimizeForF1 {
             sumMeanbestGen += convergenceForFitness.indexOf(bestFitness);  //累加每次运行首次获得最优解的代数
         }
         List<Double> meanConvergenceForFitness = sumConvergenceForFitness.stream().map(x -> x /= numOfRun).collect(Collectors.toList());
-//        StringBuilder convergen = new StringBuilder();
-//        for (int i = 0; i < meanConvergenceForFitness.size(); i++) {
-//            convergen.append(i+1+"\t"+popSize*(i+1)+"\t"+meanConvergenceForFitness.get(i)+"\n");
-//        }
         long totalTime = System.currentTimeMillis()-begin;
         double bestFun = Collections.min(bestFits);
         double worstFun = Collections.max(bestFits);
