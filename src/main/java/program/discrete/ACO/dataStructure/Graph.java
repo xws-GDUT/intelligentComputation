@@ -13,6 +13,11 @@ import java.util.List;
 public class Graph {
     private List<Vertex> vertexList;
 
+    /**
+     * 根据顶底id查找顶点
+     * @param vid
+     * @return
+     */
     public Vertex getVertex(int vid){
         Vertex vertex = null;
         for (Vertex v : vertexList) {
@@ -23,6 +28,13 @@ public class Graph {
         }
         return vertex;
     }
+
+    /**
+     * 计算两个顶点间的距离
+     * @param v1
+     * @param v2
+     * @return
+     */
     public double getDistance(int v1,int v2){
         double distance = Double.MAX_VALUE;
         for (Vertex vertex : vertexList) {
@@ -33,6 +45,12 @@ public class Graph {
         return distance;
     }
 
+    /**
+     * 获取两个点间的边
+     * @param v1
+     * @param v2
+     * @return
+     */
     public Edge getEdge(int v1,int v2){
         Edge edge = null;
         for (Vertex vertex : vertexList) {
@@ -43,16 +61,13 @@ public class Graph {
         return edge;
     }
 
+    /**
+     * 根据周游的路径更新边上的信息素
+     * @param paths
+     * @param rho
+     * @param Q
+     */
     public void updatePhoromone(List<List<Integer>> paths,double rho,double Q){
-//        for (int i = 0; i < paths.size(); i++) {
-//            if(i == paths.size()-1){
-//                Edge edge = getEdge(paths.get(i), 0);
-//
-//                edge.setPheromone((1-rho)*edge.getPheromone());
-//            }else{
-//                Edge edge = getEdge(paths.get(i), paths.get(i+1));
-//            }
-//        }
         List<Vertex> vertexes = Constant.GRAPH.getVertexList();
         for (Vertex vertex : vertexes) {
             List<Edge> edges = vertex.getEdges();

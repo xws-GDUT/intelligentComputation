@@ -29,9 +29,9 @@ public class ACO {
                 while(pop.get(i).getUnvisitedCity().size()!=0){
                     // 根据概率原则选取下一个城市
                     Ant ant = pop.get(i);
+                    Iterator<Map.Entry<Integer, Double>> iterator = ant.getUnvisitedCity().entrySet().iterator();
                     double p = new Random().nextDouble();
                     double tmp = 0.0;
-                    Iterator<Map.Entry<Integer, Double>> iterator = ant.getUnvisitedCity().entrySet().iterator();
                     while(iterator.hasNext()){
                         Map.Entry<Integer, Double> entry = iterator.next();
                         tmp+=entry.getValue();
