@@ -67,7 +67,7 @@ public class Ant implements Comparable<Ant>{
         }
     }
     public void evaluate(Evaluator evaluator){
-        totalDistance = evaluator.evaluate(this);
+        totalDistance = evaluator.evaluate(this.getPaths());
     }
 
     @Override

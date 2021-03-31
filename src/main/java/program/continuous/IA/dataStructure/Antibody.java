@@ -62,6 +62,6 @@ public class Antibody implements Cloneable,Comparable<Antibody>{
     }
 
     public void evaluate(Evaluator evaluator) {
-        this.fitness = evaluator.evaluate(this);
+        this.fitness = evaluator.evaluate(this.getGenes());
     }
 }

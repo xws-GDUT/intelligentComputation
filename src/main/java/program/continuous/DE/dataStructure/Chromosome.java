@@ -34,7 +34,7 @@ public class Chromosome implements Cloneable,Comparable{
     }
 
     public void evauate(Evaluator evaluator) {
-        fitness = evaluator.evaluate(this);
+        fitness = evaluator.evaluate(this.getGenes());
     }
 
     /**
