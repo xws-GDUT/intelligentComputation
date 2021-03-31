@@ -40,6 +40,11 @@ public class Particle implements Comparable<Particle>,Cloneable{
         }
         evaluate(evaluator);
     }
+
+    /**
+     * 评级粒子是并更新该粒子迄今为止最优的位置
+     * @param evaluator
+     */
     public void evaluate(Evaluator evaluator){
         this.fitness = evaluator.evaluate(this.getPosition());
         if(fitness<bestFitness){
@@ -62,15 +67,17 @@ public class Particle implements Comparable<Particle>,Cloneable{
         }
     }
 
-    @SneakyThrows
     @Override
     public Particle clone(){
-        Particle particle = (Particle) super.clone();
-        List<Double> position = new ArrayList<>();
-        for (int i = 0; i < this.position.size(); i++) {
-            position.add(this.position.get(i));
+        Particle particle = null;
+        try {
+            particle = (Particle) super.clone();
+            particle.setPosition(this.position.stream().collect(Collectors.toList()));
+            particle.setV(this.V.stream().collect(Collectors.toList()));
+            particle.setBestPosition(this.bestPosition.stream().collect(Collectors.toList()));
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
         }
-        particle.setPosition(position);
         return particle;
     }
 }

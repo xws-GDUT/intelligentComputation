@@ -24,14 +24,14 @@ public class PSO {
     double gBestFitness = Double.MAX_VALUE;
     List<Double> gBestPosition = null;
 
-    public void optimize(int popSize, int dimension,int iteration,double xmax, double xmin, double vmax, double vmin, Evaluator evaluator){
+    public void optimize(int popSize, int dimension,int iteration,double lowerBound, double upperBound, double vmax, double vmin, Evaluator evaluator){
 
         //初始化种群并初始化全局最优位置和最优值
-        List<Particle> pop = initPop(popSize,dimension,xmax,xmin,vmax,vmin,evaluator);
+        List<Particle> pop = initPop(popSize,dimension,lowerBound,upperBound,vmax,vmin,evaluator);
         // 初始化全局最优位置和最优值
         Particle bestParticle = Collections.min(pop).clone();
-        gBestFitness = bestParticle.getFitness();
-        gBestPosition = bestParticle.getPosition();
+        gBestFitness = bestParticle.getBestFitness();
+        gBestPosition = bestParticle.getBestPosition();
         System.out.println(1+"\t"+gBestFitness);
         // 按照公式依次迭代直至满足精度或者迭代次数
         for (int i = 0; i < iteration; i++) {
@@ -39,12 +39,16 @@ public class PSO {
             moveParticle(pop);
             // 评价种群并更新全局最优位置和最优值
             evaluate(pop,evaluator);
-//            bestParticle = Collections.min(pop);
-            if(Collections.min(pop).getFitness()<bestParticle.getFitness()){
-                bestParticle = Collections.min(pop).clone();
-                gBestFitness = bestParticle.getFitness();
-                gBestPosition = bestParticle.getPosition();
+            for (Particle particle : pop) {
+                if(particle.getBestFitness()<gBestFitness){
+                    gBestPosition = particle.getBestPosition().stream().collect(Collectors.toList());
+                    gBestFitness = particle.getBestFitness();
+                }
             }
+//            if(Collections.min(pop).getFitness()<gBestFitness){
+//                gBestFitness = bestParticle.getFitness();
+//                gBestPosition = bestParticle.getPosition().stream().collect(Collectors.toList());
+//            }
             System.out.println(i+2+"\t"+gBestFitness);
         }
         // 计算动态惯性权重值
@@ -64,25 +68,24 @@ public class PSO {
             for (int i = 0; i < v.size(); i++) {
                 double p1 = new Random().nextDouble();
                 double p2 = new Random().nextDouble();
+                // 更新粒子速度、位置并进行越界处理
                 double tmpV = W * v.get(i) + c1 * p1 * (pBestPosition.get(i) - position.get(i)) + c2 * p2 * (gBestPosition.get(i) - position.get(i));
-                double tmpX = position.get(i) + v.get(i);
-
-                // 粒子速度、位置越界处理
                 if (tmpV > particle.getVMAX() || tmpV < particle.getVMIN()) {
                     tmpV = new Random().nextDouble() * (particle.getVMAX() - particle.getVMIN()) + particle.getVMIN();
                 }
+                v.set(i, tmpV);
+                double tmpX = position.get(i) + v.get(i);
                 if (tmpX > particle.getUpperBound() || tmpX < particle.getLowerBound()) {
                     tmpX = new Random().nextDouble() * (particle.getUpperBound() - particle.getLowerBound()) + particle.getLowerBound();
                 }
-                v.set(i, tmpV);
                 position.set(i, tmpX);
             }
         }
     }
-    private List<Particle> initPop(int popSize, int dimension, double xmax, double xmin, double vmax, double vmin,Evaluator evaluator) {
+    private List<Particle> initPop(int popSize, int dimension, double lowerBound, double upperBound, double vmax, double vmin,Evaluator evaluator) {
         List<Particle> pop = new ArrayList<>();
         for (int i = 0; i < popSize; i++) {
-            pop.add(new Particle(dimension,xmax,xmin,vmax,vmin,evaluator));
+            pop.add(new Particle(dimension,lowerBound,upperBound,vmax,vmin,evaluator));
         }
         return pop;
     }
