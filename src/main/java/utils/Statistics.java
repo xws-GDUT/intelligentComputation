@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Data
 public class Statistics {
 
-    private List<List<Particle>> totalData;
+    private List<List<Double>> totalData;
     private double bestFun = Double.MAX_VALUE;   //重复运行n次中出现的最优情况
     private double worstFun = 0;;  //重复运行n次中出现的最差情况
     private double meanFun;   //重复执行n次的平均情况
@@ -28,18 +28,18 @@ public class Statistics {
         totalData = new ArrayList<>();
     }
 
-    public void record(List<Particle> data){
+    public void record(List<Double> data){
         totalData.add(data);
     }
     public void anaysis(){
         List<Double> tmp = new ArrayList<>(); //临时记录每次运行的结果
         int sumIndexOfBest = 0;
         for (int i = 0; i < totalData.size(); i++) {
-            Particle min = Collections.min(totalData.get(i));
+            double min = Collections.min(totalData.get(i));
             sumIndexOfBest += totalData.get(i).indexOf(min);
 
-            getBestAndWorst(min.getFitness());
-            tmp.add(min.getFitness());
+            getBestAndWorst(min);
+            tmp.add(min);
         }
         meanBestInFirst = sumIndexOfBest/totalData.size();
 
