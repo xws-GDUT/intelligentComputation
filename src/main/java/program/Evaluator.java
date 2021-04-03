@@ -9,4 +9,5 @@ import java.util.List;
  */
 public interface Evaluator<T>{
     double evaluate(List<T> solution);
+    int getNumOfEvaluate();
 }

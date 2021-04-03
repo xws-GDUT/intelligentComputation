@@ -6,6 +6,7 @@ import program.Evaluator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * @Author xws
@@ -44,8 +45,10 @@ public class Chromosome implements Cloneable,Comparable{
     public Chromosome cross(Chromosome chromosome) {
         Chromosome newChromosome = this.clone();
         for (int i = 0; i < newChromosome.getGenes().size(); i++) {
+//            int index = new Random().nextInt(newChromosome.getDimension());
             double p = new Random().nextDouble();
-            if(p<rateOfCrossover){
+//            if(p<rateOfCrossover || i ==index){
+            if(p<rateOfCrossover ){
                 double tmpValue = newChromosome.getGenes().get(i);
                 newChromosome.getGenes().set(i,chromosome.getGenes().get(i));
                 chromosome.getGenes().set(i,tmpValue);
@@ -90,11 +93,11 @@ public class Chromosome implements Cloneable,Comparable{
         Chromosome chromosome = null;
         try {
             chromosome = (Chromosome) super.clone();
-            List<Double> tmp = new ArrayList<>();
-            for (int i = 0; i < genes.size(); i++) {
-                tmp.add(genes.get(i));
-            }
-            chromosome.setGenes(tmp);
+//            List<Double> tmp = new ArrayList<>();
+//            for (int i = 0; i < genes.size(); i++) {
+//                tmp.add(genes.get(i));
+//            }
+            chromosome.setGenes(this.genes.stream().collect(Collectors.toList()));
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }

@@ -2,24 +2,21 @@ package program.continuous.GA.algorithm;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.apache.commons.io.FileUtils;
 import program.Evaluator;
 import program.Selector;
 import program.continuous.GA.dataStructure.Chromosome;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 @Data
 @Accessors(chain = true)
-public class SGA {
+public class GA2 {
 
     private Selector selector;
     /**
-     * 通过遗传算法得到最优个体
+     * GA+君主交叉策略
      * @param popSize 种群的大小
      * @param dimension 个体的维度
      * @param iterations 迭代次数
@@ -39,14 +36,14 @@ public class SGA {
         System.out.println("1\t"+convergence.get(0).getFitness());
         //3. 演化循环
         for (int i = 1; i < iterations; i++) {
+            //3.2 交叉
+            cross(pop);
+            //3.2 变异
+            mutate(pop);
+            //3.2 评价
+            evaluate(pop,evaluator);
             //3.1 选择
             List<Chromosome> offspring = selector.select(pop);
-            //3.2 交叉
-            cross(offspring);
-            //3.2 变异
-            mutate(offspring);
-            //3.2 评价
-            evaluate(offspring,evaluator);
             pop=offspring;
 
             bestPerGeneration.add(Collections.min(pop).clone());
@@ -77,9 +74,10 @@ public class SGA {
         }
     }
 
-    private void cross(List<Chromosome> offspring) {
-        for (int i = 0; i < offspring.size(); i+=2) {
-            offspring.get(i).cross(offspring.get(i+1));
+    private void cross(List<Chromosome> pop) {
+        Chromosome best = Collections.min(pop).clone();
+        for (int i = 0; i < pop.size(); i++) {
+            pop.get(i).cross(best.clone());
         }
     }
 

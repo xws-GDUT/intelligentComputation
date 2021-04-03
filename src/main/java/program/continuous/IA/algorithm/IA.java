@@ -36,9 +36,8 @@ public class IA{
 
         //************日志记录******************
         StringBuilder log = new StringBuilder();
-        int numOfEvaluate = pop.size(); ;
+        log.append("1\t"+evaluator.getNumOfEvaluate()+"\n");
         System.out.println("1\t"+bestAntibodyPerGeneration.get(0).getFitness());
-        log.append("1\t"+numOfEvaluate+"\t"+Collections.min(pop).getFitness()+"\n");
         //************日志记录******************
         //3. 免疫循环
         for (int i = 0; i < iterations-1; i++) {
@@ -102,7 +101,6 @@ public class IA{
                 }
                 //4.3 克隆抑制
                 evaluate(clonedPoP,evaluator);
-                numOfEvaluate+=clonedPoP.size();
                 immunePop.add(Collections.min(clonedPoP));
             }
             //5. 刷新种群
@@ -110,7 +108,6 @@ public class IA{
             List<Antibody> flashPop = initPop(popSize/2,dimension,lowerBound,upperBound,rateOfMutation);
             //5.2  计算随机生成种群的另一半种群的亲和度
             evaluate(flashPop,evaluator);
-            numOfEvaluate+=flashPop.size();
             //5.3  合并免疫种群和随机生成种群的另一半种群作为刷新的种群
             immunePop.addAll(flashPop);
             pop = immunePop;
@@ -118,13 +115,13 @@ public class IA{
             //************日志记录******************
             System.out.println(i+2+"\t"+Collections.min(pop).getFitness());
             bestAntibodyPerGeneration.add(Collections.min(pop).clone());
-            log.append(i+2+"\t"+numOfEvaluate+"\t"+bestAntibodyPerGeneration.get(i+1).getFitness()+"\n");
+            log.append(i+2+"\t"+evaluator.getNumOfEvaluate()+"\n");
             //************日志记录******************
         }
 
         //************日志记录******************
         try {
-            FileUtils.write(new File("convergence/IA.txt"),log,"UTF-8");
+            FileUtils.write(new File("convergence/IA-.txt"),log,"UTF-8");
         } catch (IOException e) {
             e.printStackTrace();
         }

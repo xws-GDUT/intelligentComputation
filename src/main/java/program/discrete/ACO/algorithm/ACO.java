@@ -6,16 +6,11 @@ import program.discrete.ACO.dataStructure.Ant;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/**
+/** 蚁群算法
  * @Author xws
  * @email wansenxu@163.com
  */
 public class ACO {
-
-    public static void main(String[] args) {
-
-        System.out.println(Constant.GRAPH);
-    }
 
     public List<Ant> optimize(int popSize, int dimension, int lowerBound, int upperBound, double alpha, double beta, double rho, double Q, int iteration, Evaluator evaluator){
         Constant.initGraph();
@@ -43,12 +38,12 @@ public class ACO {
                 }
             }
             evaluate(pop,evaluator);
+            // 更新信息素
+            updatePheromone(pop,rho,Q);
             // 记录本次最佳路线
             bestAntPerGeneration.add(Collections.min(pop));
             convergence.add(Collections.min(bestAntPerGeneration));
             System.out.println(j+1+":"+Collections.min(convergence).getTotalDistance());
-            // 更新信息素
-            updatePheromone(pop,rho,Q);
         }
         return convergence;
     }

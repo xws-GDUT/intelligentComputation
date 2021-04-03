@@ -37,14 +37,14 @@ public class Chromosome implements Cloneable,Comparable{
     }
 
     /**
-     * 单点交叉
+     * 均匀交叉
      * @param chromosome
      */
     public void cross(Chromosome chromosome) {
-        double p = new Random().nextDouble();
-        if(p<rateOfCrossover){
-            int point = new Random().nextInt(dimension);
-            for (int i = point; i < genes.size(); i++) {
+//            int point = new Random().nextInt(dimension);
+        for (int i = 0; i < genes.size(); i++) {
+            double p = new Random().nextDouble();
+            if(p<rateOfCrossover){
                 double temp = genes.get(i);
                 genes.set(i,chromosome.getGenes().get(i));
                 chromosome.getGenes().set(i,temp);

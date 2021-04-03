@@ -13,22 +13,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 /**
- *@Description 差分进化算法优化器的具体实现
+ *@Description 自适应差分演化算法
  *@Author 许万森
  *@email wansenxu@163.com
  */
 
 @Data
 @Accessors(chain = true)
-public class DE{
+public class DE2 {
 
     private Selector selector;  //选择算子
 
     /**
-     * 通过差分进化算法得到最优个体
+     * 通过自适应差分演化算法得到最优个体
      * @param popSize 种群的大小
      * @param dimension 个体的维度
      * @param iterations 迭代次数
@@ -41,9 +40,14 @@ public class DE{
         List<Chromosome> pop= initPop(popSize,dimension,lowerBound,upperBound,rateOfCrossover,rateOfMutation);
         //2. 评价初始化种群
         evaluate(pop,evaluator);
-        //************日志记录******************
+        bestPerGeneration.add(Collections.min(pop).clone());
+        System.out.println("1\t"+bestPerGeneration.get(0).getFitness());
+        double F0 = rateOfMutation;
         //3. 迭代生成新种群
         for (int k = 1; k < iterations; k++) {
+            //3.1 更新浮动因子
+            double lamda = Math.exp((1.0-iterations)/(iterations-k));
+            updateFloatFactor(pop,F0,lamda);
             //3.1 变异
             List<Chromosome> mutatedPop = mutate(pop);
             //3.2 交叉
@@ -53,12 +57,16 @@ public class DE{
             //3.4 选择
             pop=selector.select(pop, offspring);
 
-            //************日志记录******************
             bestPerGeneration.add(Collections.min(pop).clone());
-            System.out.println(k+1+"\t"+Collections.min(pop).getFitness());
-            //************日志记录******************
+            System.out.println(k+2+"\t"+Collections.min(pop).getFitness());
         }
         return bestPerGeneration;
+    }
+
+    private void updateFloatFactor(List<Chromosome> pop,double F0,double lamba) {
+        for (Chromosome chromosome : pop) {
+            chromosome.setRateOfMutation(F0*Math.pow(2,lamba));
+        }
     }
 
     /**

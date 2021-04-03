@@ -24,7 +24,9 @@ public class PSO {
     double gBestFitness = Double.MAX_VALUE;
     List<Double> gBestPosition = null;
 
-    public void optimize(int popSize, int dimension,int iteration,double lowerBound, double upperBound, double vmax, double vmin, Evaluator evaluator){
+    public List<Particle> optimize(int popSize, int dimension,int iteration,double lowerBound, double upperBound, double vmax, double vmin, Evaluator evaluator){
+        int time = 0;
+        List<Particle> convergence = new ArrayList<>();
 
         //初始化种群并初始化全局最优位置和最优值
         List<Particle> pop = initPop(popSize,dimension,lowerBound,upperBound,vmax,vmin,evaluator);
@@ -32,9 +34,11 @@ public class PSO {
         Particle bestParticle = Collections.min(pop).clone();
         gBestFitness = bestParticle.getBestFitness();
         gBestPosition = bestParticle.getBestPosition();
+        convergence.add(bestParticle);
         System.out.println(1+"\t"+gBestFitness);
         // 按照公式依次迭代直至满足精度或者迭代次数
-        for (int i = 0; i < iteration; i++) {
+//        while(evaluator.getNumOfEvaluate()<100000) {
+        for (int i = 1; i < iteration; i++) {
             // 更新各个粒子的位置与速度值
             moveParticle(pop);
             // 评价种群并更新全局最优位置和最优值
@@ -43,15 +47,17 @@ public class PSO {
                 if(particle.getBestFitness()<gBestFitness){
                     gBestPosition = particle.getBestPosition().stream().collect(Collectors.toList());
                     gBestFitness = particle.getBestFitness();
+                    time = evaluator.getNumOfEvaluate();
                 }
             }
-//            if(Collections.min(pop).getFitness()<gBestFitness){
-//                gBestFitness = bestParticle.getFitness();
-//                gBestPosition = bestParticle.getPosition().stream().collect(Collectors.toList());
-//            }
-            System.out.println(i+2+"\t"+gBestFitness);
+            convergence.add(Collections.min(pop).clone());
+            System.out.println(i+1+"\t"+gBestFitness);
         }
-        // 计算动态惯性权重值
+        System.out.println("首次出现最优的评价次数："+time+"\t"+"累计评价次数："+evaluator.getNumOfEvaluate());
+        System.out.println("首次出现最优值："+gBestFitness);
+
+
+        return convergence;
     }
 
     private void evaluate(List<Particle> pop, Evaluator evaluator) {
