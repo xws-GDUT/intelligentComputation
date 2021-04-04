@@ -59,7 +59,7 @@ public class DE2 extends Optimizer<Individual> {
         log.append("1\t"+numOfEvaluate+"\t"+Collections.min(pop).getFitness()+"\n");
         //************日志记录******************
         //3. 迭代生成新种群
-        for (int k = 0; k < iterations-1; k++) {
+        for (int k = 1; k < iterations; k++) {
             //3.1 更新浮动因子
             double lamba = Math.exp((1.0-iterations)/(iterations-k));
             mutator.updateFloatFactor(F0*Math.pow(2,lamba));

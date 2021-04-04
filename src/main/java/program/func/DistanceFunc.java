@@ -1,8 +1,7 @@
 package program.func;
 
 import program.Evaluator;
-import program.discrete.ACO.algorithm.Constant;
-import program.discrete.ACO.dataStructure.Ant;
+import program.discrete.TSP.Constant;
 
 import java.util.List;
 

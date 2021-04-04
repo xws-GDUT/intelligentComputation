@@ -51,7 +51,8 @@ public class Statistics {
     private void getBestAndWorst(double fitness){
         if(fitness<bestFun){
             bestFun = fitness;
-        }else if(fitness >worstFun){
+        }
+        if(fitness >worstFun){
             worstFun = fitness;
         }
     }

@@ -1,8 +1,8 @@
 package program.continuous.GA.dataStructure;
 
-import intelligentComputation.evoluator.impl.F1;
 import org.junit.jupiter.api.Test;
 import program.Evaluator;
+import program.func.F1;
 
 /**
  * @Author xws
@@ -12,7 +12,7 @@ class ChromosomeTest {
     @Test
     void evauate() {
         Chromosome chromosome = new Chromosome(10, -20.0, 20.0, 0.8, 0.1);
-        chromosome.evauate((Evaluator) new F1());
+        chromosome.evauate( new F1());
         System.out.println(chromosome);
     }
 
