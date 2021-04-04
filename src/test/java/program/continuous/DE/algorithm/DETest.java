@@ -1,10 +1,10 @@
 package program.continuous.DE.algorithm;
 
-import intelligentComputation.util.Matrix;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 import program.continuous.DE.dataStructure.Chromosome;
 import program.func.F1;
+import utils.Matrix;
 import utils.Statistics;
 
 import java.io.File;

@@ -1,6 +1,5 @@
 package program.continuous.IA.algorithm;
 
-import intelligentComputation.util.ECUtils;
 import org.apache.commons.io.FileUtils;
 import program.Evaluator;
 import program.continuous.IA.dataStructure.Antibody;

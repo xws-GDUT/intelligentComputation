@@ -1,10 +1,10 @@
 package program.continuous.PSO.algorithm;
 
-import intelligentComputation.util.Matrix;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 import program.continuous.PSO.dataStructure.Particle;
 import program.func.F1;
+import utils.Matrix;
 import utils.Statistics;
 
 import java.io.File;
@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static expriment.OptimizeForF1.numOfRun;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @Author xws
@@ -34,7 +32,7 @@ class PSOTest {
     public double upperBound = 20.0;
     public double VMAX = 10.0;
     public double VMIN = -10.0;
-    public int numOfNum = 20 ;
+    public int numOfRun = 20 ;
     @Test
     void optimize() throws IOException {
         Statistics statistics = new Statistics();
@@ -42,14 +40,14 @@ class PSOTest {
 
         List<Double> meanConvergence = Stream.generate(()->0.0).limit(iteration).collect(Collectors.toList());
         long begin = System.currentTimeMillis();
-        for (int i = 0; i < numOfNum; i++) {
+        for (int i = 0; i < numOfRun; i++) {
             List<Particle> convergence = PSO.optimize(popSize, dimension, iteration, lowerBound, upperBound, VMAX, VMIN, new F1());
             statistics.record(convergence.stream().map(Particle::getFitness).collect(Collectors.toList()));
             meanConvergence = Matrix.plus(meanConvergence,convergence.stream().map(Particle::getFitness).collect(Collectors.toList()));
         }
         long totalTime = System.currentTimeMillis()-begin;
         statistics.anaysis();
-        meanConvergence = meanConvergence.stream().map((x) -> x /= numOfNum).collect(Collectors.toList());
+        meanConvergence = meanConvergence.stream().map((x) -> x /= numOfRun).collect(Collectors.toList());
         StringBuilder info = new StringBuilder();
         for (int i = 0; i < meanConvergence.size(); i++) {
             info.append(i+1+"\t"+popSize*(i+1)+"\t"+meanConvergence.get(i)+"\n");

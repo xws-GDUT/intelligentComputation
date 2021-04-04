@@ -1,12 +1,12 @@
 package program.continuous.IA.algorithm;
 
 import com.sun.org.glassfish.external.statistics.Statistic;
-import intelligentComputation.util.Matrix;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 import program.continuous.GA.dataStructure.Chromosome;
 import program.continuous.IA.dataStructure.Antibody;
 import program.func.F1;
+import utils.Matrix;
 import utils.Statistics;
 
 import java.io.File;

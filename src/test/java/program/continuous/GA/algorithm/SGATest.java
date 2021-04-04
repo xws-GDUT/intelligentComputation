@@ -1,13 +1,11 @@
 package program.continuous.GA.algorithm;
 
-import intelligentComputation.Bound;
-import intelligentComputation.evoluator.Evaluator;
-import intelligentComputation.util.Matrix;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 import program.continuous.GA.dataStructure.Chromosome;
 import program.continuous.PSO.dataStructure.Particle;
 import program.func.F1;
+import utils.Matrix;
 import utils.Statistics;
 
 import java.io.File;
@@ -16,7 +14,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static expriment.OptimizeForF1.numOfRun;
 
 /**
  * @Author xws
