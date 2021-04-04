@@ -25,11 +25,11 @@ class GATest {
 
     private final int dimension = 31;
     private final int rateOfMutation = 1 / dimension;
-    private final int popSize = 100;
+    private final int popSize = 50;
     private final int lowerBound = 1;
     private final int upperBound = 31;
     private final double rateOfCrossover = 0.1;
-    private final int iteration = 1000;
+    private final int iteration = 2000;
     private final int numOfRun = 20;
     @Test
     void optimize() throws IOException {

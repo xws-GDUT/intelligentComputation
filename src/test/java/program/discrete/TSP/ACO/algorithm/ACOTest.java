@@ -26,7 +26,7 @@ class ACOTest {
     private final double beta = 5.0;
     private final double rho = 0.1;
     private final int q = 100;
-    private final int iteration = 200;
+    private final int iteration = 2000;
     private final DistanceFunc evaluator = new DistanceFunc();
     private int popSize = 50;
 
