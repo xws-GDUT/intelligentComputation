@@ -27,7 +27,7 @@ public class IA{
         double deta = (lowerBound-upperBound)/2.0;
 
         //1. 初始化种群
-        List<Antibody> pop = initPop(popSize,dimension,lowerBound,upperBound,rateOfMutation);
+        List<Antibody> pop = initPop(popSize,dimension,lowerBound,upperBound,rateOfMutation,numOfClone);
         //2. 评价种群
 //        evaluator.evaluate(pop);
         evaluate(pop,evaluator);
@@ -66,7 +66,7 @@ public class IA{
                 individual.setIncentiveStrength(a*individual.getFitness()+b*individual.getConcentration());
             }
             //3.3. 免疫选择
-            List<Antibody> immunePop = new ArrayList<>();
+            List<Antibody> immunePop = new ArrayList<>(pop.size()/2);
             pop.sort((o1,o2)->{
                 if(o1.getIncentiveStrength()>o2.getIncentiveStrength()){
                     return 1;
@@ -77,39 +77,16 @@ public class IA{
                 }
             });
             List<Antibody> firstHalf = pop.subList(0,popSize/2);
-            double neighborhoodRange=deta/(i+1.0);
-            for (int j = 0; j < firstHalf.size(); j++) {
-                //4.1 克隆
-                List<Antibody> clonedPoP = new ArrayList<>();
-                for (int k = 0; k < numOfClone; k++) {
-                    clonedPoP.add(pop.get(j).clone());
-                }
-                //4.2 变异
-                for (int k = 1; k < clonedPoP.size(); k++) {
-                    List<Double> solution = clonedPoP.get(k).getGenes();
-                    for (int l = 0; l < solution.size(); l++) {
-                        double p = Math.random();
-                        if (p < rateOfMutation) {
-                            double value = solution.get(l)+(new Random().nextDouble()-0.5)*neighborhoodRange;
-                            if(value<lowerBound || value>upperBound){
-                                value = lowerBound+new Random().nextDouble()*(upperBound-lowerBound);
-                            }
-                            solution.set(l,value);
-                        }
-                    }
-                }
-                //4.3 克隆抑制
-                evaluate(clonedPoP,evaluator);
-                immunePop.add(Collections.min(clonedPoP));
-            }
+            //4 免疫操作
+            List<Antibody> immunedPop = immune(firstHalf, deta/(i+1.0), evaluator);
             //5. 刷新种群
             //5.1 随机生成种群的另一半种群
-            List<Antibody> flashPop = initPop(popSize/2,dimension,lowerBound,upperBound,rateOfMutation);
+            List<Antibody> flashPop = initPop(popSize/2,dimension,lowerBound,upperBound,rateOfMutation,numOfClone);
             //5.2  计算随机生成种群的另一半种群的亲和度
             evaluate(flashPop,evaluator);
             //5.3  合并免疫种群和随机生成种群的另一半种群作为刷新的种群
-            immunePop.addAll(flashPop);
-            pop = immunePop;
+            immunedPop.addAll(flashPop);
+            pop = immunedPop;
 
             //************日志记录******************
             System.out.println(i+2+"\t"+Collections.min(pop).getFitness());
@@ -128,17 +105,26 @@ public class IA{
         return bestAntibodyPerGeneration;
     }
 
+    private List<Antibody> immune(List<Antibody> firstHalf, double neighborhoodRange, Evaluator evaluator) {
+        List<Antibody> list = new ArrayList<>();
+        for (int i = 0; i < firstHalf.size(); i++) {
+            list.add(firstHalf.get(i).immune(neighborhoodRange, evaluator));
+        }
+        return list;
+    }
+
+    private List<Antibody> initPop(int popSize, int dimension, double lowerBound, double upperBound, double rateOfMutation, int numOfClone) {
+        List<Antibody> pop = new ArrayList<>();
+        for (int i = 0; i < popSize; i++) {
+            pop.add(new Antibody(dimension,lowerBound,upperBound,rateOfMutation,numOfClone));
+        }
+        return pop;
+    }
+
+
     private void evaluate(List<Antibody> pop, Evaluator evaluator) {
         for (Antibody antibody : pop) {
             antibody.evaluate(evaluator);
         }
-    }
-
-    private List<Antibody> initPop(int popSize, int dimension, double lowerBound, double upperBound, double rateOfMutation) {
-        List<Antibody> pop = new ArrayList<>();
-        for (int i = 0; i < popSize; i++) {
-            pop.add(new Antibody(dimension,lowerBound,upperBound,rateOfMutation));
-        }
-        return pop;
     }
 }

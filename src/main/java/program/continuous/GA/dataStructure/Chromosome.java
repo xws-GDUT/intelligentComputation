@@ -4,6 +4,7 @@ import program.Evaluator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -26,7 +27,7 @@ public class Chromosome implements Cloneable,Comparable{
         this.upperBound = upperBound;
         this.rateOfCrossover = rateOfCrossover;
         this.rateOfMutation = rateOfMutation;
-        this.genes = new ArrayList<>();
+        this.genes = new ArrayList<>(dimension);
         for (int i = 0; i < dimension; i++) {
             genes.add( (upperBound - lowBound) * new Random().nextDouble() + lowBound);
         }
@@ -81,7 +82,7 @@ public class Chromosome implements Cloneable,Comparable{
         Chromosome chromosome = null;
         try {
             chromosome = (Chromosome) super.clone();
-            List<Double> tmp = new ArrayList<>();
+            List<Double> tmp = new ArrayList<>(dimension);
             for (int i = 0; i < genes.size(); i++) {
                 tmp.add(genes.get(i));
             }
@@ -91,4 +92,5 @@ public class Chromosome implements Cloneable,Comparable{
         }
         return chromosome;
     }
+
 }

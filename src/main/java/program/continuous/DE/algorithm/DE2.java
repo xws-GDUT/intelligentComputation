@@ -35,7 +35,7 @@ public class DE2 {
      * @return 种群每一代的收敛情况
      */
     public List<Chromosome> optimize(int popSize, int dimension, double lowerBound, double upperBound, double rateOfCrossover, double rateOfMutation, int iterations, Evaluator evaluator){
-        List<Chromosome> bestPerGeneration = new ArrayList<>();  //记录每一代最优个体的集合
+        List<Chromosome> bestPerGeneration = new ArrayList<>(popSize);  //记录每一代最优个体的集合
         //1. 初始化种群
         List<Chromosome> pop= initPop(popSize,dimension,lowerBound,upperBound,rateOfCrossover,rateOfMutation);
         //2. 评价初始化种群
@@ -107,7 +107,7 @@ public class DE2 {
     }
 
     private List<Chromosome> initPop(int popSize, int dimension, double lowerBound, double upperBound, double rateOfCrossover, double rateOfMutation) {
-        List<Chromosome> pop = new ArrayList<>();
+        List<Chromosome> pop = new ArrayList<>(popSize);
         for (int i = 0; i < popSize; i++) {
             pop.add(new Chromosome(dimension,lowerBound,upperBound,rateOfCrossover,rateOfMutation));
         }
