@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 /**
  * @Author xws
  * @email wansenxu@163.com
@@ -50,4 +48,5 @@ class GA2Test {
                 +totalTime/(double)numOfRun/1000.0,"UTF-8");
         FileUtils.write(new File("convergence/GA2.txt"),info,"UTF-8",false);
     }
+
 }

@@ -1,9 +1,7 @@
 package program.continuous.IA.algorithm;
 
-import com.sun.org.glassfish.external.statistics.Statistic;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
-import program.continuous.GA.dataStructure.Chromosome;
 import program.continuous.IA.dataStructure.Antibody;
 import program.func.F1;
 import utils.Matrix;

@@ -18,7 +18,7 @@ import java.util.stream.Stream;
  * @email wansenxu@163.com
  */
 class ACOTest {
-    public int numOfRun = 20;
+    public int numOfRun = 1;
     private final int dimension = 31;
     private final int lowerBound = 1;
     private final int upperBound = 31;

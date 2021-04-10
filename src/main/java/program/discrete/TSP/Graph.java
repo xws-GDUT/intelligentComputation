@@ -11,6 +11,7 @@ import java.util.List;
 @Data
 public class Graph {
     private List<Vertex> vertexList;
+    private List<List<Edge>> edges;
 
     /**
      * 根据顶底id查找顶点
@@ -58,6 +59,17 @@ public class Graph {
             }
         }
         return edge;
+    }
+    public void addEdge(int v1, int v2,Edge edge){
+//        Edge edge = new Edge();
+//        Vertex V1 = getVertex(v1);
+//        Vertex V2 = getVertex(v2);
+//
+//        double detaX = V1.getX()-V2.getX();
+//        double detaY = V1.getY()-V2.getY();
+//        edge.setDistance(Math.sqrt(Math.pow(detaX,2)+Math.pow(detaY,2)));
+//        edges.get(v1).set(v2,edge);
+//        edges.get(v2).set(v1,edge);
     }
 
     /**

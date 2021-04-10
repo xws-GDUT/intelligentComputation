@@ -16,8 +16,8 @@ public class Ant implements Comparable<Ant>{
     private double totalDistance;
     private int lowBound;
     private int upperBound;
-    private double alpha;
-    private double beta;
+    private double alpha;  //信息素的重要程度
+    private double beta;   //启发式信息的重要程度
 
     private Map<Integer,Double> unvisitedCity;
 
@@ -37,13 +37,14 @@ public class Ant implements Comparable<Ant>{
 
     public void visite(int vid){
         Set<Integer> citys = unvisitedCity.keySet();
-        Iterator<Integer> iterator = citys.iterator();
-        while (iterator.hasNext()){
-            Integer key = iterator.next();
-            if(key == vid){
-                iterator.remove();
-            }
-        }
+        citys.remove(vid);
+//        Iterator<Integer> iterator = citys.iterator();
+//        while (iterator.hasNext()){
+//            Integer key = iterator.next();
+//            if(key == vid){
+//                iterator.remove();
+//            }
+//        }
         paths.add(vid);
         updateProbForUnvisited(vid);
     }

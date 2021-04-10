@@ -35,6 +35,9 @@ class ChromosomeTest {
     }
 
     @Test
-    void testClone() {
+    void testEquals() {
+        Chromosome chromosome = new Chromosome(10, -20.0, 20.0, 0.8, 0.1);
+        Chromosome clone = chromosome.clone();
+        System.out.println(clone.equals(chromosome));
     }
 }

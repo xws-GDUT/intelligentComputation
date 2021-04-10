@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @Author xws
@@ -45,18 +46,18 @@ public class Chromosome implements Cloneable,Comparable{
      * @param chromosome
      */
     public void cross(Chromosome chromosome) {
-        for (int i = 0; i < dimension; i++) {
-            int value1 = this.genes.get(i);
-            double p = new Random().nextDouble();
-            if(p < rateOfCrossover){
-                Integer value2 = chromosome.getGenes().get(i);
-                int indexOfValue2 = this.genes.indexOf(value2);
-                Collections.swap(this.genes,i,indexOfValue2);
+        int numOfCross = (int) (dimension*rateOfCrossover);
+        List<Integer> numsOfRand = Stream.generate(() -> new Random().nextInt(dimension)).limit(numOfCross).collect(Collectors.toList());
+        for (int i = 0; i < numsOfRand.size(); i++) {
+            int value1 = this.genes.get(numsOfRand.get(i));
+            int value2 = chromosome.getGenes().get(numsOfRand.get(i));
+            int indexOfValue2 = this.genes.indexOf(value2);
+            Collections.swap(this.genes,numsOfRand.get(i),indexOfValue2);
 
-                int indexOfValue1 = chromosome.getGenes().indexOf(value1);
-                Collections.swap(chromosome.getGenes(),i,indexOfValue1);
-            }
+            int indexOfValue1 = chromosome.getGenes().indexOf(value1);
+            Collections.swap(chromosome.getGenes(),numsOfRand.get(i),indexOfValue1);
         }
+
     }
 
     /**

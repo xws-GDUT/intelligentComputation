@@ -6,6 +6,7 @@ import program.discrete.TSP.Vertex;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * @Author xws
@@ -48,8 +49,17 @@ public class Constant {
         vertexes.add( new Vertex( 30 ,2778.0,2826.0));
         vertexes.add( new Vertex( 31 ,2370.0,2975.0));
 
+//        List<List<Edge>> totalEdges = new ArrayList<>();
+//        for (int i = 0; i < vertexes.size(); i++) {
+//            for (int j = 0; j < vertexes.size(); j++) {
+//
+//            }
+//        }
+
         for (int i = 0; i <  vertexes.size(); i++) {
+            List<Edge> edges = new ArrayList<>();
             for (int j = 0; j <  vertexes.size(); j++) {
+//                GRAPH.addEdge(vertexes.get(i).getVid(),vertexes.get(j).getVid());
                 vertexes.get(i).addEdge(vertexes.get(j));
             }
         }
