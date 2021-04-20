@@ -1,12 +1,10 @@
 package utils;
 
 import lombok.Data;
-import program.continuous.PSO.dataStructure.Particle;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @Author xws

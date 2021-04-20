@@ -2,8 +2,9 @@ package program.discrete.TSP.ACO.algorithm;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
-import program.discrete.TSP.ACO.dataStructure.Ant;
-import program.func.DistanceFunc;
+import question.discrete.TSP.ACO.algorithm.ACO;
+import question.discrete.TSP.ACO.dataStructure.Ant;
+import evaluator.impl.DistanceFunc;
 import utils.Matrix;
 import utils.Statistics;
 

@@ -1,6 +1,7 @@
 package program.discrete.TSP.GA.dataStructure;
 
 import org.junit.jupiter.api.Test;
+import question.discrete.TSP.GA.dataStructure.Chromosome;
 
 /**
  * @Author xws

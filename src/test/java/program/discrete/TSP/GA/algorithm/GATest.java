@@ -2,9 +2,9 @@ package program.discrete.TSP.GA.algorithm;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
-import program.discrete.TSP.ACO.dataStructure.Ant;
-import program.discrete.TSP.GA.dataStructure.Chromosome;
-import program.func.DistanceFunc;
+import question.discrete.TSP.GA.algorithm.GA;
+import question.discrete.TSP.GA.dataStructure.Chromosome;
+import evaluator.impl.DistanceFunc;
 import utils.Matrix;
 import utils.Statistics;
 
@@ -13,8 +13,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @Author xws
