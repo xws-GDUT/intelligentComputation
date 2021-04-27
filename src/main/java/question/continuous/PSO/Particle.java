@@ -18,12 +18,12 @@ public class Particle implements Comparable<Particle>,Cloneable{
     private int dimension;
     private double fitness;
     private List<Double> V;
-    private double lowerBound;
-    private double upperBound;
-    private double VMAX;
-    private double VMIN;
+    private double lowerBound;       //解向量中每一维分量能取到的最小值
+    private double upperBound;       //解向量中每一维分量能取到的最大值
+    private double VMAX;             //粒子每一维分量移动的最大速度
+    private double VMIN;             //粒子每一维分量移动的最小速度
     private double bestFitness = Double.MAX_VALUE;
-    private List<Double> bestPosition;
+    private List<Double> bestPosition;      //该粒子迄今为止最优的解向量
 
     public Particle(int dimension, double lowerBound, double upperBound, double vmax, double vmin, Evaluator evaluator) {
         this.dimension = dimension;
