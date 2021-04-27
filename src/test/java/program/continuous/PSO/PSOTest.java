@@ -40,7 +40,7 @@ class PSOTest {
         List<Double> meanConvergence = Stream.generate(()->0.0).limit(iteration).collect(Collectors.toList());
         long begin = System.currentTimeMillis();
         for (int i = 0; i < numOfRun; i++) {
-            List<Particle> convergence = PSO.optimize(popSize, dimension, iteration, lowerBound, upperBound, VMAX, VMIN, new F1());
+            List<Particle> convergence = PSO.optimize(popSize,iteration, new F1(lowerBound,upperBound,dimension));
             statistics.record(convergence.stream().map(Particle::getFitness).collect(Collectors.toList()));
             meanConvergence = Matrix.plus(meanConvergence,convergence.stream().map(Particle::getFitness).collect(Collectors.toList()));
         }

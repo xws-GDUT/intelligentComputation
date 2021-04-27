@@ -16,12 +16,12 @@ public class GA2 {
      * @param evaluator 目标函数
      * @return 种群每一代的收敛情况
      */
-    public List<Chromosome> optimize(int popSize, int dimension, double lowBound, double upperBound, double rateOfCrossover, double rateOfMutation, int iterations, Evaluator evaluator) {
+    public List<Chromosome> optimize(int popSize,  double rateOfCrossover, double rateOfMutation, int iterations, Evaluator evaluator) {
         TreeSet<Chromosome> bestPerGeneration = new TreeSet<>();  //记录每一代最优个体的集合
         List<Chromosome> convergence = new ArrayList<>();     //记录算法收敛初始的集合
 
         //1. 种群初始化
-        List<Chromosome> pop = initPop(popSize,dimension,lowBound,upperBound,rateOfCrossover,rateOfMutation);
+        List<Chromosome> pop = initPop(popSize,evaluator.getDimension(),evaluator.getLowerBound(),evaluator.getUpperBound(),rateOfCrossover,rateOfMutation);
         //2. 评价种群
         evaluate(pop,evaluator);
         bestPerGeneration.add(Collections.min(pop).clone());

@@ -31,7 +31,7 @@ class GA2Test {
         List<Double> meanConvergence = Stream.generate(()->0.0).limit(iteration).collect(Collectors.toList());
         long begin = System.currentTimeMillis();
         for (int i = 0; i < numOfNum; i++) {
-            List<Chromosome> convergence = GA2.optimize(50, 10, -20.0, 20.0, 0.8, 0.1, iteration, new F1());
+            List<Chromosome> convergence = GA2.optimize(50, 0.8, 0.1, iteration, new F1(-20,20,dimension));
             statistics.record(convergence.stream().map(Chromosome::getFitness).collect(Collectors.toList()));
             meanConvergence = Matrix.plus(meanConvergence,convergence.stream().map(Chromosome::getFitness).collect(Collectors.toList()));
         }

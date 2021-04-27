@@ -20,12 +20,12 @@ public class IA{
 //    private double a=1.0;
 //    private double b=1.0;
 
-    public List<Antibody> optimize(int popSize, int dimension, double lowerBound, double upperBound, double rateOfMutation, double a, double b, int iterations, int numOfClone, double threshollOfSimilarity, Evaluator evaluator) {
+    public List<Antibody> optimize(int popSize,double rateOfMutation, double a, double b, int iterations, int numOfClone, double threshollOfSimilarity, Evaluator evaluator) {
         List<Antibody> bestAntibodyPerGeneration = new ArrayList<>();
-        double deta = (lowerBound-upperBound)/2.0;
+        double deta = (evaluator.getLowerBound()-evaluator.getUpperBound())/2.0;
 
         //1. 初始化种群
-        List<Antibody> pop = initPop(popSize,dimension,lowerBound,upperBound,rateOfMutation,numOfClone);
+        List<Antibody> pop = initPop(popSize,evaluator.getDimension(),evaluator.getLowerBound(),evaluator.getUpperBound(),rateOfMutation,numOfClone);
         //2. 评价种群
 //        evaluator.evaluate(pop);
         evaluate(pop,evaluator);
@@ -79,7 +79,7 @@ public class IA{
             List<Antibody> immunedPop = immune(firstHalf, deta/(i+1.0), evaluator);
             //5. 刷新种群
             //5.1 随机生成种群的另一半种群
-            List<Antibody> flashPop = initPop(popSize/2,dimension,lowerBound,upperBound,rateOfMutation,numOfClone);
+            List<Antibody> flashPop = initPop(popSize/2,evaluator.getDimension(),evaluator.getLowerBound(),evaluator.getUpperBound(),rateOfMutation,numOfClone);
             //5.2  计算随机生成种群的另一半种群的亲和度
             evaluate(flashPop,evaluator);
             //5.3  合并免疫种群和随机生成种群的另一半种群作为刷新的种群

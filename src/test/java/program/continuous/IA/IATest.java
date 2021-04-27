@@ -30,7 +30,7 @@ class IATest {
         List<Double> meanConvergence = Stream.generate(()->0.0).limit(iteration).collect(Collectors.toList());
         long begin = System.currentTimeMillis();
         for (int i = 0; i < numOfRun; i++) {
-            List<Antibody> convergence = IA.optimize(100, dimension, -20.0, 20.0, 0.7, 1.0, 1.0, iteration, 10, 0.2, new F1());
+            List<Antibody> convergence = IA.optimize(100, 0.7, 1.0, 1.0, iteration, 10, 0.2, new F1(-20,20,dimension));
             statistics.record(convergence.stream().map(Antibody::getFitness).collect(Collectors.toList()));
             meanConvergence = Matrix.plus(meanConvergence,convergence.stream().map(Antibody::getFitness).collect(Collectors.toList()));
         }

@@ -12,7 +12,7 @@ class ParticleTest {
 
     @Test
     void testClone() {
-        Particle particle = new Particle(10, -20.0, 20.0, 10.0, -10.0, new F1());
+        Particle particle = new Particle(10, -20.0, 20.0, 10.0, -10.0, new F1(-20,20,10));
         Particle clone = particle.clone();
         for (int i = 0; i < clone.getPosition().size(); i++) {
             clone.getPosition().set(i,1.0);

@@ -27,10 +27,10 @@ public class DE{
      * @param evaluator 目标函数
      * @return 种群每一代的收敛情况
      */
-    public List<Chromosome> optimize(int popSize, int dimension, double lowerBound, double upperBound, double rateOfCrossover, double rateOfMutation, int iterations, Evaluator evaluator){
+    public List<Chromosome> optimize(int popSize, double rateOfCrossover, double rateOfMutation, int iterations, Evaluator evaluator){
         List<Chromosome> bestPerGeneration = new ArrayList<>(popSize);  //记录每一代最优个体的集合
         //1. 初始化种群
-        List<Chromosome> pop= initPop(popSize,dimension,lowerBound,upperBound,rateOfCrossover,rateOfMutation);
+        List<Chromosome> pop= initPop(popSize,evaluator.getDimension(),evaluator.getLowerBound(),evaluator.getUpperBound(),rateOfCrossover,rateOfMutation);
         //2. 评价初始化种群
         evaluate(pop,evaluator);
         bestPerGeneration.add(Collections.min(pop).clone());

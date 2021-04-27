@@ -22,9 +22,12 @@ import java.util.stream.Stream;
 class SGATest {
     public static int numOfRun = 20;
     private final int popSize = 50;
-    private final int dimension = 10;
     private final int iteration = 2000;
     private final int numOfNum = 20;
+    private final double lowerBound = -20;
+    private final double upperBound = 20;
+    private final int dimension = 10;
+
     @Test
     void optimize() throws IOException {
         SGA SGA = new SGA();
@@ -32,7 +35,7 @@ class SGATest {
         List<Double> meanConvergence = Stream.generate(()->0.0).limit(iteration).collect(Collectors.toList());
         long begin = System.currentTimeMillis();
         for (int i = 0; i < numOfNum; i++) {
-            List<Chromosome> convergence = SGA.optimize(50, 10, -20.0, 20.0, 0.8, 0.1, iteration, new F1());
+            List<Chromosome> convergence = SGA.optimize(50,0.8, 0.1, iteration, new F1(lowerBound,upperBound,dimension));
             statistics.record(convergence.stream().map(Chromosome::getFitness).collect(Collectors.toList()));
             meanConvergence = Matrix.plus(meanConvergence,convergence.stream().map(Chromosome::getFitness).collect(Collectors.toList()));
         }

@@ -12,7 +12,7 @@ class ChromosomeTest {
     @Test
     void evauate() {
         Chromosome chromosome = new Chromosome(10, -20.0, 20.0, 0.8, 0.1);
-        chromosome.evauate( new F1());
+        chromosome.evauate( new F1(-20,20,10));
         System.out.println(chromosome);
     }
 

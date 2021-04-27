@@ -32,7 +32,7 @@ class DETest {
         List<Double> meanConvergence = Stream.generate(()->0.0).limit(iteration).collect(Collectors.toList());
         long begin = System.currentTimeMillis();
         for (int i = 0; i < numOfNum; i++) {
-            List<Chromosome> convergence = DE.optimize(50,10,-20.0,20.0,0.1,0.5,2000,new F1());
+            List<Chromosome> convergence = DE.opimize(50,0.1,0.5,2000,new F1(-20,20,dimension));
             statistics.record(convergence.stream().map(Chromosome::getFitness).collect(Collectors.toList()));
             meanConvergence = Matrix.plus(meanConvergence,convergence.stream().map(Chromosome::getFitness).collect(Collectors.toList()));
         }

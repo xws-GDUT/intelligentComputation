@@ -23,12 +23,13 @@ public class PSO {
     double gBestFitness = Double.MAX_VALUE;
     List<Double> gBestPosition = null;
 
-    public List<Particle> optimize(int popSize, int dimension,int iteration,double lowerBound, double upperBound, double vmax, double vmin, Evaluator evaluator){
+    public List<Particle> optimize(int popSize,int iteration, Evaluator evaluator){
         int time = 0;
         List<Particle> convergence = new ArrayList<>();
 
         //初始化种群并初始化全局最优位置和最优值
-        List<Particle> pop = initPop(popSize,dimension,lowerBound,upperBound,vmax,vmin,evaluator);
+        List<Particle> pop = initPop(popSize,evaluator.getDimension(),evaluator.getLowerBound()
+                ,evaluator.getUpperBound(),evaluator.getUpperBound()/2.0,evaluator.getLowerBound()/2.0,evaluator);
         // 初始化全局最优位置和最优值
         Particle bestParticle = Collections.min(pop).clone();
         gBestFitness = bestParticle.getBestFitness();
