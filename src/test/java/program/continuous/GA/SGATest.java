@@ -30,12 +30,12 @@ class SGATest {
 
     @Test
     void optimize() throws IOException {
-        SGA SGA = new SGA();
+        SGA SGA = new SGA(popSize,0.8,0.1,new F1(lowerBound,upperBound,dimension),iteration);
         Statistics statistics = new Statistics();
         List<Double> meanConvergence = Stream.generate(()->0.0).limit(iteration).collect(Collectors.toList());
         long begin = System.currentTimeMillis();
         for (int i = 0; i < numOfNum; i++) {
-            List<Chromosome> convergence = SGA.optimize(50,0.8, 0.1, iteration, new F1(lowerBound,upperBound,dimension));
+            List<Chromosome> convergence = SGA.optimize();
             statistics.record(convergence.stream().map(Chromosome::getFitness).collect(Collectors.toList()));
             meanConvergence = Matrix.plus(meanConvergence,convergence.stream().map(Chromosome::getFitness).collect(Collectors.toList()));
         }

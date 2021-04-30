@@ -13,17 +13,17 @@ import java.util.Random;
 @Data
 public class Chromosome implements Cloneable,Comparable{
     private List<Double> genes;
-    private int dimension;
     private double fitness;
-    private double lowBound;
-    private double upperBound;
+//    private int dimension;
+//    private double lowBound;
+//    private double upperBound;
     private double rateOfCrossover;
     private double rateOfMutation;
 
     public Chromosome(int dimension,double lowBound,double upperBound, double rateOfCrossover, double rateOfMutation) {
-        this.dimension = dimension;
-        this.lowBound = lowBound;
-        this.upperBound = upperBound;
+//        this.dimension = dimension;
+//        this.lowBound = lowBound;
+//        this.upperBound = upperBound;
         this.rateOfCrossover = rateOfCrossover;
         this.rateOfMutation = rateOfMutation;
         this.genes = new ArrayList<>(dimension);
@@ -55,7 +55,7 @@ public class Chromosome implements Cloneable,Comparable{
     /**
      * 域内随机变异
      */
-    public void mutate() {
+    public void mutate(double lowBound,double upperBound) {
        for (int i = 0; i < genes.size(); i++) {
             double p = new Random().nextDouble();
             if(p<rateOfMutation){
@@ -81,7 +81,7 @@ public class Chromosome implements Cloneable,Comparable{
         Chromosome chromosome = null;
         try {
             chromosome = (Chromosome) super.clone();
-            List<Double> tmp = new ArrayList<>(dimension);
+            List<Double> tmp = new ArrayList<>();
             for (int i = 0; i < genes.size(); i++) {
                 tmp.add(genes.get(i));
             }

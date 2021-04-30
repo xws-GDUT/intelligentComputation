@@ -22,7 +22,6 @@ public class DE{
     /**
      * 通过差分进化算法得到最优个体
      * @param popSize 种群的大小
-     * @param dimension 个体的维度
      * @param iterations 迭代次数
      * @param evaluator 目标函数
      * @return 种群每一代的收敛情况

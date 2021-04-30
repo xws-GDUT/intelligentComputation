@@ -30,7 +30,7 @@ class ChromosomeTest {
     void mutate() {
         Chromosome chromosome = new Chromosome(10, -20.0, 20.0, 0.8, 0.5);
         System.out.println(chromosome);
-        chromosome.mutate();
+//        chromosome.mutate();
         System.out.println(chromosome);
     }
 

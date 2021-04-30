@@ -1,5 +1,6 @@
 package question.continuous.GA;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import evaluator.Evaluator;
@@ -8,8 +9,13 @@ import java.util.*;
 
 @Data
 @Accessors(chain = true)
+@AllArgsConstructor
 public class SGA {
-
+    private int popSize; //种群大小
+    private double rateOfCrossover;
+    private double rateOfMutation;
+    Evaluator evaluator; //目标函数
+    private int iterations;
     /**
      * 通过遗传算法得到最优个体
      * @param popSize 种群的大小
@@ -47,6 +53,36 @@ public class SGA {
         System.out.println("累计评价次数："+evaluator.getNumOfEvaluate());
         return convergence;
     }
+    public List<Chromosome> optimize() {
+        TreeSet<Chromosome> bestPerGeneration = new TreeSet<>();  //记录每一代最优个体的集合
+        List<Chromosome> convergence = new ArrayList<>(iterations);     //记录算法收敛初始的集合
+
+        //1. 种群初始化
+        List<Chromosome> pop = initPop(popSize,evaluator.getDimension(),evaluator.getLowerBound(),evaluator.getUpperBound(),rateOfCrossover,rateOfMutation);
+        //2. 评价种群
+        evaluate(pop,evaluator);
+        bestPerGeneration.add(Collections.min(pop).clone());
+        convergence.add(bestPerGeneration.first());
+        System.out.println("1\t"+bestPerGeneration.first().getFitness());
+        //3. 演化循环
+        for (int i = 1; i < iterations; i++) {
+            //3.1 选择
+            List<Chromosome> offspring = select(pop);
+            //3.2 交叉
+            cross(offspring);
+            //3.2 变异
+            mutate(offspring);
+            //3.2 评价
+            evaluate(offspring,evaluator);
+            pop=offspring;
+
+            bestPerGeneration.add(Collections.min(pop).clone());
+            convergence.add(bestPerGeneration.first());
+            System.out.println(i+1+"\t"+bestPerGeneration.first().getFitness());
+    }
+        System.out.println("累计评价次数："+evaluator.getNumOfEvaluate());
+        return convergence;
+    }
 
     private void evaluate(List<Chromosome> pop, Evaluator evaluator) {
         for (Chromosome chromosome : pop) {
@@ -64,7 +100,7 @@ public class SGA {
 
     private void mutate(List<Chromosome> offspring) {
         for (Chromosome individual : offspring) {
-            individual.mutate();
+            individual.mutate(evaluator.getLowerBound(),evaluator.getUpperBound());
         }
     }
 

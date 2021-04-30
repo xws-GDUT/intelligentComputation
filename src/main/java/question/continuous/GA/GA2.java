@@ -8,10 +8,11 @@ import java.util.*;
 @Data
 public class GA2 {
 
+    Evaluator evaluator;
     /**
      * GA+君主交叉策略
      * @param popSize 种群的大小
-     * @param dimension 个体的维度
+//     * @param dimension 个体的维度
      * @param iterations 迭代次数
      * @param evaluator 目标函数
      * @return 种群每一代的收敛情况
@@ -63,7 +64,7 @@ public class GA2 {
 
     private void mutate(List<Chromosome> offspring) {
         for (Chromosome individual : offspring) {
-            individual.mutate();
+            individual.mutate(evaluator.getLowerBound(),evaluator.getUpperBound());
         }
     }
 
